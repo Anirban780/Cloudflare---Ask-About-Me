@@ -7,59 +7,119 @@ url: "https://github.com/Anirban780"
 
 # Anirban Sarkar — Curriculum Vitae
 
-**Target Roles:** Software Engineer | Data Engineer | Cloud Engineer | DevOps Engineer  
+**Contact:** anirban.jobs26@gmail.com | +91-8787529368  
 **GitHub:** https://github.com/Anirban780  
+**LinkedIn:** https://linkedin.com/in/anirban-sarkar  
+**Target Roles:** Software Engineer | Data Engineer | Cloud Engineer | DevOps Engineer  
 **Location:** India  
 
-## Executive Summary
+---
 
-Versatile engineer with strong capabilities across the modern software engineering spectrum — encompassing distributed application development, data engineering pipelines, cloud infrastructure orchestration, and automated CI/CD workflows. Experienced with TypeScript, JavaScript, Python, SQL, Linux systems, Cloudflare Developer Platform, containerization, and cloud infrastructure management.
+## Technical Skills
 
-## Technical Skills & Tooling
+### Programming Languages
+Python, SQL, C++, C, JavaScript
 
-### Programming Languages & Runtimes
-- **Primary:** TypeScript, JavaScript (Node.js 20/22, modern ES modules), Python, SQL (PostgreSQL, SQLite), Bash / Shell scripting.
-- **Runtimes & Frameworks:** Node.js, Cloudflare Workers Runtime (`workerd`), React 19, Vite, Tailwind CSS.
+### Frameworks & Libraries
+FastAPI, React JS, Node JS, Express JS, NestJS, Spring Boot, Streamlit, Tailwind CSS
 
-### Cloud Platforms & Edge Infrastructure
-- **Cloudflare Platform:** Cloudflare Workers, Durable Objects, Workers AI, Vectorize, Cloudflare Workflows, D1 (serverless SQL), KV, Pages.
-- **Containerization & Compute:** Docker container creation, multi-stage Docker builds, container orchestration fundamentals, Linux system administration.
-- **Cloud Concepts:** Edge computing, serverless compute, event-driven architectures, WebSocket streaming, low-latency API design.
+### Cloud & Data Engineering
+- **Microsoft Azure:** Azure Data Factory (ADF), Azure Data Lake Storage (ADLS)
+- **AWS:** ECS, S3, SQS, Amazon Bedrock, AWS Fargate
+- **GCP:** BigQuery, Cloud Composer, Pub/Sub, Google Cloud Storage (GCS), Dataflow
+- **Big Data & Orchestration:** Apache Spark, Databricks, Apache Airflow
+- **AI & Agents:** LangGraph, RAG (Retrieval-Augmented Generation)
 
-### Data Engineering & Retrieval Systems
-- **Databases & Stores:** PostgreSQL, SQLite (embedded & edge), Cloudflare D1, Cloudflare Vectorize (vector search index).
-- **Pipelines & ETL:** Batch and streaming ingestion pipelines, schema migration, idempotency design, data deduplication, YAML/JSON data validation with Zod.
-- **AI & RAG:** Retrieval-Augmented Generation (RAG), vector similarity search (cosine metric, 768 dimensions), bge-base-en-v1.5 embedding models, Meta Llama 3.3 70B, Vercel AI SDK integration, hit@k evaluation metrics, hallucination prevention.
+### Databases
+PostgreSQL (with pgvector), MySQL, MongoDB, Snowflake, Firebase
 
-### DevOps, CI/CD & Reliability
-- **Version Control & Automation:** Git, GitHub, GitHub Actions CI/CD workflows, automated testing gates (Vitest, Jest).
-- **Security & Hygiene:** Secret scanning, zero hardcoded credentials, `.dev.vars` / `.env` isolation, constant-time authentication comparison, rate limiting.
-- **Observability & QA:** Health check endpoints (`/api/health`), structured logging, automated smoke tests, TypeScript strict type safety.
+### Tools, DevOps & Observability
+GitHub, GitLab, Docker, Kubernetes, Power BI, Langfuse, AWS CloudWatch
 
-## Professional Experience & Role Highlights
+---
 
-### Software Engineering Focus
-- Engineered full-stack applications with clean separation of concerns, strict type safety, and modular component architectures.
-- Developed real-time streaming WebSocket clients and servers using Cloudflare Agents SDK and React hooks (`useAgent`, `useAgentChat`).
-- Designed resilient stateful backends utilizing Durable Objects SQLite with automatic reconnection and chat session recovery.
+## Work Experience
 
-### Data Engineering Focus
-- Designed durable multi-step ingestion pipelines using Cloudflare Workflows with automatic retries, exponential backoff, and step idempotency.
-- Built custom heading-aware text chunking algorithms with paragraph packing, sentence splitting without cutting words, and intra-section overlap.
-- Configured Vectorize vector indexes with metadata indexing for fast filtered similarity queries.
+### Software Development Engineer Trainee — Sigmoid, Bangalore
+**Aug 2026 – Present**
 
-### Cloud & Edge Infrastructure Focus
-- Architected zero-cold-start edge applications distributed globally across hundreds of edge locations.
-- Configured declarative Worker bindings (`wrangler.jsonc`) linking AI, Vectorize, Durable Objects, and Workflows seamlessly.
-- Enforced strict edge security including sliding-window rate limiting, input length caps, and payload size guardrails.
+- Designed and built scalable ETL pipelines on Databricks and Azure in collaboration with cross-functional engineering and business teams, delivering production-grade data for downstream analytics.
+- Architected and deployed GenAI proofs of concept, including RAG architectures and LangGraph multi-agent workflows, establishing distributed observability to ensure LLM security and performance.
 
-### DevOps & Automation Focus
-- Designed automated GitHub Actions CI/CD workflows executing automated linting, formatting, typechecking, and unit tests on every pull request.
-- Implemented automated evaluation harnesses to measure information retrieval accuracy and verify resistance to prompt injection.
-- Standardized local development environments ensuring parity between local development and edge production deployments.
+### Data Engineer Intern — Sigmoid, Bangalore
+**Jan 2026 – Jul 2026**
 
-## Education & Certifications
+- Built scalable Apache Spark and Apache Airflow ETL pipelines across Azure, AWS, and GCP standardizing data lake ingestion through a Medallion Architecture.
+- Shipped GenAI proofs of concept — RAG pipelines and LangGraph multi-agent orchestration.
 
-- **Degree:** Bachelor of Technology / Science in Engineering / Computer Science.
-- **Focus Areas:** Distributed systems, database management systems, data structures and algorithms, operating systems, and computer networks.
-- **Continuous Learning:** Active hands-on development with modern AI agent architectures, edge platforms, and cloud infrastructure best practices.
+### Backend Development Intern — National Informatics Centre (NIC), Tripura
+**June 2025 – July 2025**
+
+- Built a state-level VAT management system for 10,000+ users, shipping 10 RESTful APIs with Spring Boot and redesigning the PostgreSQL schema to optimize query execution and data integrity.
+
+---
+
+## Projects
+
+### AudioScape — Music Streaming Platform
+**Stack:** React 19, NestJS, PostgreSQL, TypeScript  
+**Period:** Jun 2026 – Aug 2026  
+**GitHub:** https://github.com/Anirban780/AudioScape
+
+- Architected a NestJS, Prisma, and PostgreSQL backend with a 3-tier search caching pipeline (in-memory → DB cache → pg_trgm full-text search), cutting YouTube API quota usage by 90%+ and reducing cached search latency from ~850ms to under 15ms.
+- Built a zero-cost, database-first recommendation engine using TF-IDF vector modeling and recency-weighted user taste profiles to generate personalized daily mixes without any external API calls.
+- Delivered a high-performance React/Vite frontend with SWR caching and a custom drag-and-drop audio player (Zustand, @dnd-kit), achieving instant page renders and secure Google OAuth 2.0 authentication with HttpOnly token rotation.
+
+### Promotion Analytics Data Platform
+**Stack:** Azure ADF, ADLS, Databricks, Power BI  
+**Period:** Mar 2026 – Apr 2026
+
+- Built an end-to-end Medallion Architecture pipeline integrating multi-partner data from SAP, Salesforce, and Nielsen, processing 106,935 rows across 7 datasets at a 100% data quality pass rate.
+- Designed a metadata-driven ADF orchestration pipeline with parallel ingestion and automated failure alerting, and delivered a Power BI dashboard translating results into 5 business KPIs for stakeholders.
+
+### PDF Compliance Intelligence Platform
+**Stack:** Python, LangGraph, AWS (SQS FIFO, Fargate), Docker  
+**Period:** May 2026 – Jun 2026  
+**GitHub:** https://github.com/Anirban780/PDF-Compliance-Intelligence-Platform
+
+- Built an enterprise document governance system orchestrating 5 parallel AI agents across compliance domains, with a human-in-the-loop review workflow using AWS SQS FIFO and Fargate for fault-tolerant processing.
+- Implemented a RAG pipeline (pgvector, Amazon Titan embeddings) with PII pre-hashing, instrumenting distributed tracing across agent spans via Langfuse and CloudWatch.
+
+### Cloudflare Ask-About-Me (This Project)
+**Stack:** TypeScript, Cloudflare Workers, Durable Objects, Vectorize, Workers AI, Llama 3.3  
+**GitHub:** https://github.com/Anirban780/Cloudflare---Ask-About-Me
+
+- Built an autonomous AI portfolio concierge agent on the Cloudflare Serverless AI stack, implementing semantic RAG, streaming tool calling, visitor memory, HITL contact messaging, and a live GitHub integration.
+
+### Northstar Pay Lakehouse
+**Stack:** Azure Databricks Serverless, Lakeflow Pipelines, DABs  
+**Period:** Jul 2026  
+**GitHub:** https://github.com/Anirban780/Northstar_Pay_Lakehouse
+
+- A demo project with generated datasets to work on Azure Databricks Serverless, incorporating Lakeflow pipelines and Databricks Asset Bundles (DABs).
+
+### Face Recognition Attendance System
+**Stack:** Python  
+**Period:** Dec 2025  
+**GitHub:** https://github.com/Anirban780/Face-Recognition-Attendance-System
+
+- Built a biometric attendance tracking system using computer vision and face recognition.
+
+---
+
+## Education
+
+**National Institute of Technology, Agartala — Tripura, India**  
+B.Tech in Computer Science and Engineering  
+**CGPA: 9.1**  
+Aug 2022 – July 2026
+
+---
+
+## Certifications & Achievements
+
+- **Databricks Certified Data Engineer Associate** — Validated expertise in building and optimizing data pipelines using Apache Spark and Databricks.
+- **Competitive Programming:** Specialist Rank (Max. 1514) on Codeforces, 3-star rank on CodeChef, solved 1000+ problems on LeetCode.
+- **Smart India Hackathon 2024:** Cleared intra-college rounds.
+- **Hacktoberfest 2024:** 2 Pull Requests merged into open-source projects.
+- **Meta Hacker Cup 2025:** Participated and submitted accepted solutions (https://github.com/Anirban780/Meta-Hacker-Cup-2025).

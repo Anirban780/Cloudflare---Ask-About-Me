@@ -1,34 +1,58 @@
 ---
 docId: project-ask-about-me
-title: "Ask-About-Me: AI Portfolio Concierge on Cloudflare"
+title: "Cloudflare Ask-About-Me — AI Portfolio Agent"
 sourceType: project
-url: "https://github.com/Anirban780/Cloudflare---Ask-About-Me.git"
+url: "https://github.com/Anirban780/Cloudflare---Ask-About-Me"
 ---
 
-# Ask-About-Me: AI Portfolio Concierge
+# Cloudflare Ask-About-Me — AI Portfolio Agent
 
-## Problem Statement
+**GitHub:** https://github.com/Anirban780/Cloudflare---Ask-About-Me  
+**Stack:** TypeScript, Cloudflare Workers, Durable Objects, Vectorize, Workers AI (Llama 3.3 70B), Hono, Vitest  
 
-Traditional resume PDFs and static portfolio websites offer static, one-way presentation. Recruiters and engineering hiring managers spend valuable time sifting through documents to find specific technical competencies, project architectures, or matching skillsets.
+---
 
-## Architectural Approach
+## Project Overview
 
-Ask-About-Me is a public, real-time AI portfolio concierge running 100% natively on Cloudflare with zero external API keys.
+An autonomous AI portfolio concierge built on the **Cloudflare Serverless AI stack**. Visitors can ask natural language questions about Anirban Sarkar — his experience, skills, projects, and background — and receive accurate, RAG-grounded answers from an AI agent powered by Meta Llama 3.3 70B.
 
-1. **Stateful Per-Visitor Agent:** Built using the Cloudflare Agents SDK on Durable Objects (`AIChatAgent`). Each visitor receives their own dedicated stateful agent instance with private SQLite storage, WebSocket streaming, and persistent visitor memory across sessions.
-2. **Workers AI Native LLM:** Powered by Meta Llama 3.3 70B (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`) through the Vercel AI SDK and `workers-ai-provider`.
-3. **Durable Ingestion Pipeline:** Implemented as a Cloudflare Workflow (`IngestWorkflow`) that validates markdown frontmatter, chunks text using a pure heading-aware chunker, generates 768-dimensional embeddings via `@cf/baai/bge-base-en-v1.5`, and atomically upserts vectors to Vectorize.
-4. **Grounded Retrieval & Citations:** The model operates under strict grounding rules, issuing citations (`[1]`, `[2]`) referencing source documents, refusing to hallucinate unknown facts, and handling rate limits gracefully.
+This is the project you are currently talking to.
 
-## Tech Stack
+---
 
-- **Runtimes:** Cloudflare Workers, Durable Objects SQLite, Cloudflare Workflows
-- **AI & Vector:** Workers AI (Llama 3.3 70B fp8, bge-base-en-v1.5), Vectorize
-- **Frontend:** React 19, Vite, Tailwind CSS, Streamdown, Phosphor Icons
-- **Testing & Tooling:** TypeScript, Vitest, Wrangler, tsx, gray-matter
+## Architecture
 
-## Outcome & Key Achievements
+### Edge-Native AI Agent
+- **Cloudflare Workers + Durable Objects:** The `PortfolioAgent` Durable Object (extending `AIChatAgent`) manages per-visitor state, rate limiting, and chat history in SQLite at the edge — globally distributed with zero cold starts.
+- **Hono Router:** Handles HTTP routing in the Worker, bridging REST and WebSocket connections to the Durable Object.
 
-- Eliminated third-party LLM costs and external API key vulnerabilities.
-- Sub-second streaming token latencies on Cloudflare's global edge network.
-- Automated retrieval evaluation suite targeting ≥85% Hit@5 and zero hallucination bait failures.
+### Retrieval-Augmented Generation (RAG)
+- Knowledge base files (this project's markdown files) are chunked, embedded via `@cf/baai/bge-base-en-v1.5`, and stored in **Cloudflare Vectorize** (cosine similarity).
+- At query time, the `searchKnowledgeBase` tool embeds the visitor's question and retrieves the top-k relevant chunks to ground the AI response.
+- Ingestion uses **Cloudflare Workflows** for durable multi-step pipeline execution with automatic retries.
+
+### Streaming Tool Calling Fix (S11)
+- Identified and fixed a critical SSE deduplication bug in `workers-ai-provider` v3.3.1 where both `chunk.tool_calls` (native format) and `choices[0].delta.tool_calls` (OpenAI format) were processed from each SSE event, duplicating every token.
+- Implemented `createSafeAIBinding()` — a Proxy wrapper that strips the duplicate field before it reaches `workers-ai-provider`.
+
+### Visitor Memory & Contact System
+- Per-visitor memory stored in Durable Object SQLite (`visitor_context` JSON column).
+- Visitors can leave messages for Anirban via the `leaveMessageForOwner` tool, stored in `owner_inbox` table.
+- Rate limiting (sliding window) protects against abuse.
+
+### Live GitHub Integration
+- `getGitHubProjects` tool fetches Anirban's live public repositories from the GitHub API in real time.
+
+---
+
+## Key Technical Decisions
+- **Workers AI over OpenAI:** Keeps all compute on Cloudflare — lower latency, no egress costs.
+- **Vectorize metadata-only storage:** Full chunk text stored in vector metadata (no separate D1 DB needed for RAG).
+- **`createSafeAIBinding` proxy:** Minimal targeted fix for SSE duplication without forking the upstream provider.
+
+---
+
+## Testing & Quality
+- **51 unit tests** across 7 test suites (Vitest), all passing.
+- **oxlint** and **TypeScript strict** checks pass with 0 errors/warnings.
+- Clean Vite build for frontend assets.
