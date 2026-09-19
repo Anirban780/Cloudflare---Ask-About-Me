@@ -213,6 +213,25 @@
 - **Commits:** `e048d7c` (`feat: github tool and owner inbox`)
 - **Open questions:** None; S9 P1 features complete.
 
+---
+
+## 2026-09-19 — Session 11 — Slice S10: Polish, README & Submission Readiness — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Finalize all project documentation, create a comprehensive README following SPECS §15.1, write a non-developer testing guide, update the decision log, run final verification, and commit the project in submission-ready state.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S10-antigravity.md](prompt-history/2026-09-19-S10-antigravity.md): "ok you can proceed with slice s10 followinf earlier procedures but do not deploy or push to github remote url, also tell me what docs and things i need to do from my side for this to test it out, you can prepare a md document about the usage, commands needed and all, so that anybody aside the main developer can test it out and check its readiness"
+- **What worked:**
+  - Created `docs/plans/S10.md` execution plan before coding.
+  - Rewrote `README.md` fully following SPECS §15.1 (9 sections): title/pitch/live URL, Cloudflare assignment mapping table, Mermaid component and sequence diagrams + "life of a chat turn", key design decisions table with D1–D10 + tool vs always retrieval discussion, evaluation benchmark table (24 queries, 4 paraphrase pairs, 8 bait scenarios), full setup guide (prerequisites, wrangler login, secrets, infra commands, ingest, dev, deploy), project structure tree, limitations & P2 backlog, AI-assisted development attribution.
+  - Created `TESTING_GUIDE.md` — 14-section non-developer end-to-end testing document covering: prerequisites, Cloudflare account creation and wrangler login, code clone & install, `.dev.vars` secrets setup, Vectorize index creation, dev server startup, knowledge base ingestion, UI verification checklist (basic chat, citations, GitHub tool, HITL approval card, visitor memory, guardrail tests), admin route curl tests (health, search-debug, inbox, admin/ask, 401 check), eval dry-run and live run, unit test commands, optional deploy, what to report, and troubleshooting guide.
+  - Appended D11 (`needsApproval: true` rationale — HITL safety with explicit visitor confirmation) and D12 (owner_inbox DO SQLite strategy — three-tier fallback avoids D1 provisioning requirement) to `docs/SPECS.md §17` decision log.
+  - Ran `npm test` (49/49 passed, 6 files) and `npm run typecheck` (0 errors). All verification gates green.
+- **What failed / was corrected:** N/A — all S10 documentation tasks completed cleanly.
+- **Human decisions made:** Proceed with Slice S10 documentation and submission readiness. No deployment requested.
+- **Commits:** `docs: final readme and architecture`
+- **Open questions:** None; project is submission-ready pending user deploying and getting live URL.
+
+
 
 
 

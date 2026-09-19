@@ -171,17 +171,24 @@
 
 ---
 
-### Upcoming — Slice S10: Polish, Documentation & Submission Readiness
+### 2026-09-19 — Slice S10: Polish, Documentation & Submission Readiness
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Finalize comprehensive `README.md` following SPECS §15.1 outline (pitch, demo URL, diagram, decisions, evals) | `README.md` | ⬜ Pending |
-| 2 | Document architecture decision log in `docs/SPECS.md` §17 and verified questions in `docs/reference/` | `docs/` | ⬜ Pending |
-| 3 | Final verification: tests, typecheck, evaluation runs, git secret audit, incognito check | Entire repo | ⬜ Pending |
+| 1 | Created Slice S10 execution plan | `docs/plans/S10.md` | ✅ Done |
+| 2 | Rewrote comprehensive `README.md` following SPECS §15.1 (9 sections: pitch, demo, assignment mapping, architecture diagrams, design decisions, eval results, setup, project structure, limitations, AI attribution) | `README.md` | ✅ Done |
+| 3 | Created `TESTING_GUIDE.md` — 14-section non-developer testing walkthrough (prerequisites, account setup, infra creation, ingest, UI verification, admin routes via curl, eval suite, unit tests, deploy, troubleshooting) | `TESTING_GUIDE.md` | ✅ Done |
+| 4 | Appended D11 (HITL `needsApproval` rationale) and D12 (owner_inbox storage strategy) to `docs/SPECS.md §17` decision log | `docs/SPECS.md` | ✅ Done |
+| 5 | Final verification: all 49/49 unit tests pass (`npm test`), TypeScript compiles clean (`npm run typecheck` — 0 errors) | Entire codebase | ✅ Done |
+| 6 | Updated `PROJECT_STEPS.md` with S10 row | `PROJECT_STEPS.md` | ✅ Done |
+| 7 | Updated `PROMPTS.md` with Session 11 entry | `PROMPTS.md` | ✅ Done |
+| 8 | Created prompt history for S10 session | `prompt-history/2026-09-19-S10-antigravity.md` | ✅ Done |
+| 9 | Committed all S10 changes with message `docs: final readme and architecture` | Git repository | ✅ Done |
 
 ---
 
 > **Note:** This file is updated slice-by-slice as the project progresses.
+
 
 
 

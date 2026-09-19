@@ -772,3 +772,5 @@ Open questions where an agent must check the installed package or current docs r
 | D8 | GitHub data via edge-cached `fetch` in a tool | Live data with no extra binding; cache avoids rate limits | KV cache |
 | D9 | Workers AI only, no external keys | Matches the assignment and keeps the repo secret-free | External LLM |
 | D10 | Agent is third-person, not the owner | Honest identity; avoids impersonation | First-person "digital twin" |
+| D11 | `needsApproval: true` on `leaveMessageForOwner` tool | Human-in-the-Loop safety: visitor explicitly sees the message preview and must confirm before it is stored; prevents accidental or injected messages | Auto-execute without approval: simpler but no HITL story |
+| D12 | `owner_inbox` stored in DO SQLite (visitor's own instance) with optional central singleton escalation | Avoids provisioning D1 for P0/P1; three-tier fallback (local DO → central singleton DO → D1) means inbox works without extra infra | D1 only: required provisioning and schema migration; added friction for reviewers |
