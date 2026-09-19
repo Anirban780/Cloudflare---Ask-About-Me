@@ -118,6 +118,6 @@
 - **What failed / was corrected:**
   - `ADMIN_TOKEN` access in `src/server.ts` threw TypeScript error because standard `Env` interface from Wrangler types lacked optional secrets. Solved cleanly with `type EnvWithSecrets = Env & { ADMIN_TOKEN?: string }`.
 - **Human decisions made:** Proceed with Slice S5 durable ingestion pipeline.
-- **Commits:** `feat: durable ingestion workflow`
+- **Commits:** `c8e7ec2` (`feat: durable ingestion workflow`)
 - **Open questions:** None; S5 ingestion pipeline and knowledge base complete.
 
