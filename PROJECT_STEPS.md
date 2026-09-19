@@ -33,17 +33,31 @@
 | 6 | Generated Wrangler types (`npx wrangler types`) | `worker-configuration.d.ts` | ✅ Done |
 | 7 | Recorded package versions | `docs/reference/VERSIONS.md` | ✅ Done |
 | 8 | Documented verified SDK items (SPECS §16) | `docs/reference/VERIFIED.md` | ✅ Done |
-| 9 | Running TypeScript compilation verification (`typecheck`) | `package.json`, `src/` | 🔄 In Progress |
+| 9 | Verified TypeScript compilation clean (`npm run typecheck`) | `src/`, `package.json` | ✅ Done (0 errors) |
+| 10 | Created comprehensive project README outline | `README.md` | ✅ Done |
+| 11 | Committed baseline scaffold (`106697a`) | Git repository | ✅ Done |
 
 ---
 
-### Upcoming — Slice S1: Repo Hygiene
+### Upcoming — Slice S1: Repo Hygiene & Reference Docs
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
 | 1 | Reference documents repository in `docs/reference/` | `docs/reference/*.md` | ⬜ Pending |
-| 2 | Git commit of Slice S0 baseline | Git history | ⬜ Pending |
+| 2 | Connect remote GitHub repository | Git remote | ⬜ Pending |
 
 ---
 
-> **Note:** This file will be updated slice-by-slice as the project progresses. Each slice gets its own section above once work begins.
+### Upcoming — Slice S2: Persona Agent & Llama 3.3
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Switch model to Llama 3.3 70B via `CHAT_MODEL` | `wrangler.jsonc` | ⬜ Pending |
+| 2 | Create `src/agent/portfolio-agent.ts` subclassing `AIChatAgent` | `src/agent/portfolio-agent.ts` | ⬜ Pending |
+| 3 | Create system prompt with Anirban's persona | `src/agent/system-prompt.ts` | ⬜ Pending |
+| 4 | Remove demo tools from starter (`getWeather`, etc.) | `src/server.ts` | ⬜ Pending |
+| 5 | Rebrand chat UI with Ask-About-Me branding | `src/app.tsx` | ⬜ Pending |
+
+---
+
+> **Note:** This file is updated slice-by-slice as the project progresses.

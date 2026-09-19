@@ -13,7 +13,7 @@
 - **What worked:** Successfully parsed all three documents (PROJECT_SCOPE.md, SPECS.md, SKILLS.md) and understood the full architecture, data flow, and dependency requirements.
 - **What failed / was corrected:** N/A (initial session)
 - **Human decisions made:** Approved project structure and planning approach. Provided owner placeholder values (Anirban Sarkar, Anirban780, etc.).
-- **Commits:** Pending baseline scaffold.
+- **Commits:** Pre-commit scaffolding.
 - **Open questions:** Resolved owner placeholders into `docs/PROJECT_INPUTS.md`.
 
 ---
@@ -23,8 +23,17 @@
 - **Goal:** Scaffold `cloudflare/agents-starter`, install dependencies, verify build and types, establish baseline commit.
 - **Key prompts:**
   - [prompt-history/2026-09-19-S00-antigravity.md](prompt-history/2026-09-19-S00-antigravity.md): "all has been done, and now begin implementing the project directory setup and basic template and proceed with slice s0 and also make sure to keep in mind of the md files to get context what needs to be done and how and also mention proper comments in codebase for better understanding, and what ever changes that is bein done, keep it mentioned in a md file and also keep the prompts ready in a md file what ever is being given"
-- **What worked:** In progress (S0 planning and scaffolding).
-- **What failed / was corrected:** TBD
-- **Human decisions made:** Proceed with Slice S0.
-- **Commits:** Pending completion of S0 gate.
-- **Open questions:** Verification of Cloudflare login for remote Workers AI during local dev.
+- **What worked:**
+  - Successfully cloned `cloudflare/agents-starter` and integrated into `ask-about-me/`.
+  - Created `.gitignore` strictly blocking secrets and `.dev.vars`.
+  - Installed Node 22 LTS and completed `npm install`.
+  - Executed `npx wrangler types` generating `worker-configuration.d.ts`.
+  - Added `"typecheck": "tsc --noEmit"` to `package.json` and verified 0 TypeScript compilation errors.
+  - Recorded exact versions in `docs/reference/VERSIONS.md`.
+  - Documented verified API findings in `docs/reference/VERIFIED.md`.
+  - Created `README.md` following SPECS.md §15.1 outline.
+- **What failed / was corrected:**
+  - Standard sandbox blocked network access during initial git clone; retried with permission and cloned cleanly.
+- **Human decisions made:** Proceed with Slice S0 baseline template scaffolding.
+- **Commits:** `106697a` (`chore: baseline agents-starter scaffold`)
+- **Open questions:** None; S0 baseline gate passed cleanly.
