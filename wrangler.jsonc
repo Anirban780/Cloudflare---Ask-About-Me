@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "agent-starter",
+  "name": "ask-about-me",
   "main": "src/server.ts",
   "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat"],
@@ -8,20 +8,31 @@
   "assets": {
     "directory": "./public",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/agents/*", "/oauth/*"]
+    "run_worker_first": ["/agents/*", "/api/*", "/oauth/*"]
   },
   "durable_objects": {
     "bindings": [
       {
-        "class_name": "ChatAgent",
-        "name": "ChatAgent"
+        "class_name": "PortfolioAgent",
+        "name": "PortfolioAgent"
       }
     ]
   },
   "migrations": [
     {
-      "new_sqlite_classes": ["ChatAgent"],
+      "new_sqlite_classes": ["PortfolioAgent"],
       "tag": "v1"
     }
-  ]
+  ],
+  "vars": {
+    "CHAT_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "RETRIEVAL_MODE": "tool",
+    "OWNER_NAME": "Anirban Sarkar",
+    "OWNER_FIRST": "Anirban",
+    "AGENT_NAME": "Ask-About-Me",
+    "GITHUB_USER": "Anirban780",
+    "TARGET_ROLES": "Software Engineer, Data Engineer, Cloud Engineer, DevOps Engineer",
+    "REPO_URL": "https://github.com/Anirban780/Cloudflare---Ask-About-Me.git"
+  },
+  "observability": { "enabled": true }
 }

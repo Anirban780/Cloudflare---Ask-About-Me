@@ -35,28 +35,33 @@
 | 8 | Documented verified SDK items (SPECS §16) | `docs/reference/VERIFIED.md` | ✅ Done |
 | 9 | Verified TypeScript compilation clean (`npm run typecheck`) | `src/`, `package.json` | ✅ Done (0 errors) |
 | 10 | Created comprehensive project README outline | `README.md` | ✅ Done |
-| 11 | Committed baseline scaffold (`106697a`) | Git repository | ✅ Done |
+| 11 | Committed baseline scaffold (`106697a`, `e828150`) | Git repository | ✅ Done |
 
 ---
 
-### Upcoming — Slice S1: Repo Hygiene & Reference Docs
+### 2026-09-19 — Slice S2: Persona Agent & Llama 3.3
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Reference documents repository in `docs/reference/` | `docs/reference/*.md` | ⬜ Pending |
-| 2 | Connect remote GitHub repository | Git remote | ⬜ Pending |
+| 1 | Created Slice S2 execution plan | `docs/plans/S02.md` | ✅ Done |
+| 2 | Configured `wrangler.jsonc`: `CHAT_MODEL` (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`), `PortfolioAgent` DO binding, owner vars | `wrangler.jsonc` | ✅ Done |
+| 3 | Implemented `src/agent/system-prompt.ts`: Anirban Sarkar persona, grounding rules, dynamic visitor profile injection | `src/agent/system-prompt.ts` | ✅ Done |
+| 4 | Implemented `src/agent/portfolio-agent.ts`: `PortfolioAgent` class with Llama 3.3 streaming, 0.2 temperature, no demo tools | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 5 | Cleaned `src/server.ts`: export `PortfolioAgent`, add `/api/health` endpoint, route agent WebSocket | `src/server.ts` | ✅ Done |
+| 6 | Rebranded `src/app.tsx`: "Ask-About-Me" concierge UI, suggestion chips, persistent visitor ID, removed starter demo tools/MCP | `src/app.tsx` | ✅ Done |
+| 7 | Regenerated Wrangler types | `worker-configuration.d.ts` | ✅ Done |
+| 8 | Verified TypeScript compilation clean (`npm run typecheck`) | `src/`, `worker-configuration.d.ts` | ✅ Done (0 errors) |
 
 ---
 
-### Upcoming — Slice S2: Persona Agent & Llama 3.3
+### Upcoming — Slice S3: Chunker & Tests
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Switch model to Llama 3.3 70B via `CHAT_MODEL` | `wrangler.jsonc` | ⬜ Pending |
-| 2 | Create `src/agent/portfolio-agent.ts` subclassing `AIChatAgent` | `src/agent/portfolio-agent.ts` | ⬜ Pending |
-| 3 | Create system prompt with Anirban's persona | `src/agent/system-prompt.ts` | ⬜ Pending |
-| 4 | Remove demo tools from starter (`getWeather`, etc.) | `src/server.ts` | ⬜ Pending |
-| 5 | Rebrand chat UI with Ask-About-Me branding | `src/app.tsx` | ⬜ Pending |
+| 1 | Create `src/config.ts` with constants per SPECS §5.4 | `src/config.ts` | ⬜ Pending |
+| 2 | Implement pure `chunkMarkdown` in `src/rag/chunker.ts` | `src/rag/chunker.ts` | ⬜ Pending |
+| 3 | Install `vitest` dev dependency per SKILLS R7 allowlist | `package.json` | ⬜ Pending |
+| 4 | Implement unit tests for all 9 chunker properties | `test/chunker.test.ts` | ⬜ Pending |
 
 ---
 

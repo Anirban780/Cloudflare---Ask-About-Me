@@ -32,8 +32,26 @@
   - Recorded exact versions in `docs/reference/VERSIONS.md`.
   - Documented verified API findings in `docs/reference/VERIFIED.md`.
   - Created `README.md` following SPECS.md §15.1 outline.
-- **What failed / was corrected:**
-  - Standard sandbox blocked network access during initial git clone; retried with permission and cloned cleanly.
+- **What failed / was corrected:** Standard sandbox blocked network access during initial git clone; retried with permission and cloned cleanly.
 - **Human decisions made:** Proceed with Slice S0 baseline template scaffolding.
-- **Commits:** `106697a` (`chore: baseline agents-starter scaffold`)
+- **Commits:** `106697a` (`chore: baseline agents-starter scaffold`), `e828150` (`docs: record S0 completion`)
 - **Open questions:** None; S0 baseline gate passed cleanly.
+
+---
+
+## 2026-09-19 — Session 3 — Slice S2: Persona Agent & Llama 3.3 — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Switch model to Llama 3.3 70B, implement third-person persona prompt for Anirban Sarkar, create PortfolioAgent, strip demo tools, rebrand UI to Ask-About-Me.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S02-antigravity.md](prompt-history/2026-09-19-S02-antigravity.md): "yes you can proceed to slice s2 and prepare the changes and write them to their respective md files and also save the prompts and for questions, ask me openly and notify me"
+- **What worked:**
+  - Configured `wrangler.jsonc` with `CHAT_MODEL` (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`), `PortfolioAgent` Durable Object binding, and owner variables (`Anirban Sarkar`, `Anirban`, `Anirban780`, etc.).
+  - Created `src/agent/system-prompt.ts` with third-person persona and grounding rules.
+  - Implemented `src/agent/portfolio-agent.ts` with streaming Llama 3.3 model, 0.2 temperature, 600 max output tokens, and zero demo tools.
+  - Refactored `src/server.ts` to export `PortfolioAgent` and provide `/api/health`.
+  - Rebranded `src/app.tsx` to "Ask-About-Me", added suggestion chips for Anirban's background, and stripped starter demo features (MCP panel, image upload).
+  - Successfully regenerated types (`npx wrangler types`) and verified `npm run typecheck` (0 errors).
+- **What failed / was corrected:** N/A.
+- **Human decisions made:** Proceed with Slice S2.
+- **Commits:** Pending S2 commit (`feat: llama 3.3 persona agent`).
+- **Open questions:** None.
