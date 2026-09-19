@@ -1,0 +1,9 @@
+# Example local environment variables for Ask-About-Me
+# Copy this file to .dev.vars for local development:
+# cp .dev.vars.example .dev.vars
+
+# Admin bearer token for /api/admin/* endpoints
+ADMIN_TOKEN=your-local-dev-admin-token-here
+
+# Optional: Cloudflare API token if not using wrangler login
+# CLOUDFLARE_API_TOKEN=your-cloudflare-api-token
