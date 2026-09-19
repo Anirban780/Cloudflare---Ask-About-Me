@@ -18,6 +18,9 @@ import {
 import { Toasty, useKumoToastManager } from "@cloudflare/kumo/components/toast";
 import { Streamdown } from "streamdown";
 import { code } from "@streamdown/code";
+import { matchCitations } from "./rag/citations";
+import type { RetrievalItem } from "./rag/retrieve";
+import { SourceChips } from "./components/SourceChips";
 import {
   PaperPlaneRightIcon,
   StopIcon,
@@ -96,13 +99,19 @@ function ToolPartView({
 
   // Completed
   if (part.state === "output-available") {
+    const isSearch = toolName === "searchKnowledgeBase";
+    const resultCount = isSearch && (part.output as { results?: unknown[] })?.results?.length;
+    const label = isSearch
+      ? `Knowledge search (${resultCount || 0} chunks consulted)`
+      : toolName;
+
     return (
       <div className="flex justify-start">
         <Surface className="max-w-[85%] px-4 py-2.5 rounded-xl ring ring-kumo-line">
           <div className="flex items-center gap-2 mb-1">
             <GearIcon size={14} className="text-kumo-inactive" />
             <Text size="xs" variant="secondary" bold>
-              {toolName}
+              {label}
             </Text>
             <Badge variant="secondary">Done</Badge>
           </div>
@@ -158,13 +167,18 @@ function ToolPartView({
   }
 
   // Running
+  const runningText =
+    toolName === "searchKnowledgeBase"
+      ? "Searching Anirban's documents..."
+      : `Running ${toolName}...`;
+
   return (
     <div className="flex justify-start">
       <Surface className="max-w-[85%] px-4 py-2.5 rounded-xl ring ring-kumo-line">
         <div className="flex items-center gap-2">
-          <GearIcon size={14} className="animate-spin text-kumo-brand" />
+          <GearIcon size={14} className="animate-spin text-amber-500" />
           <Text size="xs" variant="secondary">
-            Running {toolName}...
+            {runningText}
           </Text>
         </div>
         <ToolIO label="Input" value={part.input} />
@@ -412,6 +426,16 @@ function Chat() {
                       );
                     }
 
+                    // Extract verified chunks from searchKnowledgeBase tool outputs in this message
+                    const searchParts = message.parts.filter(
+                      (p) => isToolUIPart(p) && getToolName(p) === "searchKnowledgeBase" && p.state === "output-available"
+                    );
+                    const retrievedItems: RetrievalItem[] = searchParts.flatMap((p) => {
+                      const out = (p as { output?: { results?: RetrievalItem[] } }).output;
+                      return out?.results || [];
+                    });
+                    const matchedCitations = matchCitations(part.text, retrievedItems);
+
                     return (
                       <div key={key} className="flex justify-start">
                         <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-kumo-base text-kumo-default leading-relaxed border border-kumo-line shadow-xs">
@@ -423,6 +447,11 @@ function Chat() {
                           >
                             {part.text}
                           </Streamdown>
+                          {matchedCitations.length > 0 && (
+                            <div className="px-4 pb-3">
+                              <SourceChips citations={matchedCitations} />
+                            </div>
+                          )}
                         </div>
                       </div>
                     );

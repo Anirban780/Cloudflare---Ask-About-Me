@@ -105,17 +105,36 @@
 
 ---
 
-### Upcoming — Slice S6: RAG Tool & Citations
+### 2026-09-19 — Slice S6: RAG Tool & Citations
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Implement `src/rag/retrieve.ts` (query embedding, Vectorize lookup, score filtering, dedup, truncation) | `src/rag/retrieve.ts` | ⬜ Pending |
-| 2 | Implement `searchKnowledgeBase` agent tool with Zod schema | `src/agent/tools.ts` | ⬜ Pending |
-| 3 | Wire `searchKnowledgeBase` tool into `PortfolioAgent` | `src/agent/portfolio-agent.ts` | ⬜ Pending |
-| 4 | Add citation chip rendering in frontend chat UI | `src/components/SourceChips.tsx`, `src/app.tsx` | ⬜ Pending |
-| 5 | Implement citation extraction unit tests | `test/citations.test.ts` | ⬜ Pending |
+| 1 | Created citation parsing and matching utilities | `src/rag/citations.ts` | ✅ Done |
+| 2 | Created unit tests for citations covering 10 edge cases | `test/citations.test.ts` | ✅ Done (10/10 passed) |
+| 3 | Implemented pure 7-step retrieval algorithm with filtering, deduplication, and budget caps | `src/rag/retrieve.ts` | ✅ Done |
+| 4 | Created unit tests for retrieval algorithm covering 7 properties | `test/retrieve.test.ts` | ✅ Done (7/7 passed) |
+| 5 | Created `buildTools` with `searchKnowledgeBase` and SQLite `retrieval_log` insertion | `src/agent/tools.ts` | ✅ Done |
+| 6 | Refined grounding rules in system prompt to enforce tool calling on factual queries | `src/agent/system-prompt.ts` | ✅ Done |
+| 7 | Updated `PortfolioAgent` with `onStart()` SQLite table init, tools integration, and `RETRIEVAL_MODE="always"` fallback | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 8 | Created interactive expandable `SourceChips` UI component | `src/components/SourceChips.tsx` | ✅ Done |
+| 9 | Updated `src/app.tsx` with dynamic tool running indicators and message citation chip rendering | `src/app.tsx` | ✅ Done |
+| 10 | Created Slice S6 execution plan and prompt history | `docs/plans/S06.md`, `prompt-history/2026-09-19-S06-antigravity.md` | ✅ Done |
+| 11 | Verified all tests (`npm test`: 26/26 passed) and types (`npm run typecheck`: 0 errors) | Entire codebase | ✅ Done |
+
+---
+
+### Upcoming — Slice S7: Memory & Guardrails
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Implement `decideRate(events, now, limit)` pure rate limiter logic and unit tests | `src/agent/guards.ts`, `test/guards.test.ts` | ⬜ Pending |
+| 2 | Implement `rememberVisitorContext` tool and state persistence | `src/agent/tools.ts`, `src/agent/portfolio-agent.ts` | ⬜ Pending |
+| 3 | Implement `@callable() forgetVisitor()` RPC for privacy and memory reset | `src/agent/portfolio-agent.ts` | ⬜ Pending |
+| 4 | Add memory chip and "Forget me" button in frontend UI | `src/app.tsx` | ⬜ Pending |
+| 5 | Integrate input length validation banner before model call | `src/agent/portfolio-agent.ts`, `src/app.tsx` | ⬜ Pending |
 
 ---
 
 > **Note:** This file is updated slice-by-slice as the project progresses.
+
 

@@ -121,3 +121,30 @@
 - **Commits:** `c8e7ec2` (`feat: durable ingestion workflow`)
 - **Open questions:** None; S5 ingestion pipeline and knowledge base complete.
 
+---
+
+## 2026-09-19 — Session 7 — Slice S6: RAG Tool & Citations — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Implement the semantic RAG tool (`searchKnowledgeBase`), pure 7-step retrieval algorithm (`src/rag/retrieve.ts`), citation extraction utilities (`src/rag/citations.ts`), interactive source chips (`src/components/SourceChips.tsx`), wire into `PortfolioAgent`, and verify with unit tests.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S06-antigravity.md](prompt-history/2026-09-19-S06-antigravity.md): "ok you can proceed with slice s6 and follow exact procedures followed in earlier steps"
+- **What worked:**
+  - Implemented `src/rag/citations.ts` with `extractCitationIndices` (parsing `[1]`, `[1][2]`, `[1, 2]`, deduplication, stray bracket ignoring) and `matchCitations` mapping citations to verified sources without hallucinating absent numbers.
+  - Implemented unit tests in `test/citations.test.ts` covering 10 edge cases per SPECS.md §12.1.
+  - Implemented pure retrieval pipeline `retrieve()` in `src/rag/retrieve.ts`: validates query length, embeds with bge-base-en-v1.5, queries Vectorize, applies `MIN_SCORE: 0.5` threshold, deduplicates with `MAX_PER_DOC: 2`, caps at `MAX_RESULTS: 5`, trims within `MAX_CONTEXT_CHARS: 6000`, and assigns 1-based sequential indices.
+  - Implemented unit tests in `test/retrieve.test.ts` with mock AI and Vectorize bindings covering 7 core retrieval properties and error resilience.
+  - Implemented `buildTools()` in `src/agent/tools.ts` exposing `searchKnowledgeBase` with Zod input schema and SQLite `retrieval_log` insertion.
+  - Updated `src/agent/system-prompt.ts` with strict grounding rules explicitly requiring `searchKnowledgeBase` calls on factual queries.
+  - Updated `PortfolioAgent` in `src/agent/portfolio-agent.ts` with `onStart()` SQLite table DDL (`retrieval_log`, `rate_events`), tools registration, and `RETRIEVAL_MODE="always"` fallback.
+  - Implemented `src/components/SourceChips.tsx` rendering expandable source cards with document title, section, relevance score percentage, source quote, and external links.
+  - Enhanced `src/app.tsx` with dynamic tool running state ("Searching Anirban's documents...") and inline `SourceChips` rendering inside assistant messages.
+  - Verified verification gates: `npm test` passed all 26 tests (chunker, citations, retrieve) and `npm run typecheck` passed with 0 errors.
+- **What failed / was corrected:**
+  - `agent.env` in `tools.ts` was protected in Durable Object; decoupled tool context interface `AgentToolContext { env, sql }` cleanly.
+  - `RETRIEVAL_MODE` type union in `worker-configuration.d.ts` required string assertion for `"always"` check.
+  - Kumo `<Text>` component rejected `className`; wrapped in styled `<span>` for truncation.
+- **Human decisions made:** Proceed with Slice S6 RAG tool and citations.
+- **Commits:** `feat: rag tool with citations`
+- **Open questions:** None; S6 RAG tool and citations complete.
+
+
