@@ -88,17 +88,34 @@
 
 ---
 
-### Upcoming — Slice S5: Ingestion Pipeline
+### 2026-09-19 — Slice S5: Ingestion Pipeline & Knowledge Base
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Implement embedding helper | `src/rag/embed.ts` | ⬜ Pending |
-| 2 | Implement full durable `IngestWorkflow` (validate, chunk, delete-stale, embed-upsert) | `src/workflows/ingest-workflow.ts` | ⬜ Pending |
-| 3 | Add admin ingest endpoints (`POST /api/admin/ingest`, `GET /api/admin/ingest/:id`, `GET /api/admin/search-debug`) | `src/server.ts` | ⬜ Pending |
-| 4 | Implement CLI script (`scripts/ingest.ts`) | `scripts/ingest.ts` | ⬜ Pending |
-| 5 | Install `tsx` and `gray-matter` dev dependencies per SKILLS R7 allowlist | `package.json` | ⬜ Pending |
-| 6 | Create initial knowledge documents | `knowledge/*.md` | ⬜ Pending |
+| 1 | Installed `tsx` and `gray-matter` dev dependencies per SKILLS R7 allowlist | `package.json`, `package-lock.json` | ✅ Done |
+| 2 | Added `"ingest": "tsx scripts/ingest.ts"` script to `package.json` | `package.json` | ✅ Done |
+| 3 | Implemented embedding helper `embedTexts` with `@cf/baai/bge-base-en-v1.5` | `src/rag/embed.ts` | ✅ Done |
+| 4 | Implemented durable `IngestWorkflow` (validate, chunk, delete-stale, embed-upsert, finalize) | `src/workflows/ingest-workflow.ts` | ✅ Done |
+| 5 | Added admin API routes (`POST /api/admin/ingest`, `GET /api/admin/ingest/:id`, `GET /api/admin/search-debug`) | `src/server.ts` | ✅ Done |
+| 6 | Created CLI ingestion runner `scripts/ingest.ts` with frontmatter validation and status polling | `scripts/ingest.ts` | ✅ Done |
+| 7 | Created full 8-document initial knowledge base (40 chunks total) | `knowledge/about.md`, `knowledge/resume.md`, `knowledge/blog-edge-state-architecture.md`, `knowledge/projects/*.md` | ✅ Done |
+| 8 | Created Slice S5 plan document | `docs/plans/S05.md` | ✅ Done |
+| 9 | Recorded prompt transcript | `prompt-history/2026-09-19-S05-antigravity.md` | ✅ Done |
+| 10 | Verified test suite (`npm test`: 9/9 passed) and types (`npm run typecheck`: 0 errors) | Entire codebase | ✅ Done |
+
+---
+
+### Upcoming — Slice S6: RAG Tool & Citations
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Implement `src/rag/retrieve.ts` (query embedding, Vectorize lookup, score filtering, dedup, truncation) | `src/rag/retrieve.ts` | ⬜ Pending |
+| 2 | Implement `searchKnowledgeBase` agent tool with Zod schema | `src/agent/tools.ts` | ⬜ Pending |
+| 3 | Wire `searchKnowledgeBase` tool into `PortfolioAgent` | `src/agent/portfolio-agent.ts` | ⬜ Pending |
+| 4 | Add citation chip rendering in frontend chat UI | `src/components/SourceChips.tsx`, `src/app.tsx` | ⬜ Pending |
+| 5 | Implement citation extraction unit tests | `test/citations.test.ts` | ⬜ Pending |
 
 ---
 
 > **Note:** This file is updated slice-by-slice as the project progresses.
+

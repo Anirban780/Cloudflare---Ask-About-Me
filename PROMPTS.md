@@ -96,3 +96,28 @@
 - **Human decisions made:** Proceed with Slice S4.
 - **Commits:** `cf58826` (`feat: vectorize binding and health route`)
 - **Open questions:** None; S4 infrastructure bindings complete.
+
+---
+
+## 2026-09-19 — Session 6 — Slice S5: Ingestion Pipeline & Knowledge Base — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Build the complete durable ingestion workflow (`IngestWorkflow`), embedding helper (`embedTexts`), admin API routes (`/api/admin/ingest`, `/api/admin/ingest/:id`, `/api/admin/search-debug`), ingestion CLI runner (`scripts/ingest.ts`), install allowlisted dev tools (`tsx`, `gray-matter`), and create the complete verified knowledge base in `knowledge/`.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S05-antigravity.md](prompt-history/2026-09-19-S05-antigravity.md): "yes you can proceed with slice s5 and follow the excat procedure followed in earlier slices"
+- **What worked:**
+  - Installed allowlisted dev dependencies `tsx` and `gray-matter` per SKILLS.md R7 allowlist and added `"ingest": "tsx scripts/ingest.ts"` to `package.json`.
+  - Implemented `src/rag/embed.ts` utilizing Workers AI model `@cf/baai/bge-base-en-v1.5` generating 768-dimensional float embeddings.
+  - Implemented full durable `IngestWorkflow` in `src/workflows/ingest-workflow.ts` featuring multi-step durable execution: `validate`, `chunk`, `delete-stale` (with exponential backoff retries), `embed-upsert-${i}` (batch embedding + Vectorize upserting returning only counts to prevent step state bloat), and `finalize`.
+  - Implemented admin endpoints in `src/server.ts`:
+    - `POST /api/admin/ingest` with constant-time Bearer token authentication and 1 MB payload protection.
+    - `GET /api/admin/ingest/:instanceId` for polling workflow lifecycle status.
+    - `GET /api/admin/search-debug` for direct evaluation vector search against Vectorize.
+  - Created CLI ingestion runner `scripts/ingest.ts` with frontmatter parsing, Zod validation, error checking, and polling progress reporting.
+  - Created full initial knowledge base in `knowledge/` containing 8 comprehensive documents and 40 chunks total: `about.md`, `resume.md`, `blog-edge-state-architecture.md`, and 5 project deep dives.
+  - Verified verification gates: `npm test` passed all 9 unit tests and `npm run typecheck` passed with 0 errors.
+- **What failed / was corrected:**
+  - `ADMIN_TOKEN` access in `src/server.ts` threw TypeScript error because standard `Env` interface from Wrangler types lacked optional secrets. Solved cleanly with `type EnvWithSecrets = Env & { ADMIN_TOKEN?: string }`.
+- **Human decisions made:** Proceed with Slice S5 durable ingestion pipeline.
+- **Commits:** `feat: durable ingestion workflow`
+- **Open questions:** None; S5 ingestion pipeline and knowledge base complete.
+
