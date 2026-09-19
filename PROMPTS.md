@@ -74,5 +74,5 @@
   - Vitest initially loaded `vite.config.ts` with `@cloudflare/vite-plugin` which attempted to reach remote Cloudflare server; resolved cleanly by creating `vitest.config.ts` for node environment.
   - Test fixture in Property 5 had test string containing the section name; fixed test string.
 - **Human decisions made:** Proceed with Slice S3.
-- **Commits:** Pending S3 commit (`feat: markdown chunker with tests`).
+- **Commits:** `aa93e57` (`feat: markdown chunker with tests`)
 - **Open questions:** None; S3 chunker fully verified.
