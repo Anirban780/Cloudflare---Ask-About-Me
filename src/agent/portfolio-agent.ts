@@ -1,7 +1,7 @@
 /**
  * PortfolioAgent Durable Object: manages visitor session, chat history,
  * semantic RAG tool execution, guardrails, and streaming AI responses.
- * Defined per SPECS.md §8, §11, and §15 (F-02, F-04, F-06, F-07, F-09).
+ * Defined per SPECS.md §8, §11, and §15 (F-02, F-04, F-06, F-07, F-09, F-11, F-12).
  */
 
 import { AIChatAgent, type OnChatMessageOptions } from "@cloudflare/ai-chat";
@@ -23,6 +23,17 @@ import {
   RATE_LIMIT_PER_HOUR,
 } from "../config";
 
+/** Record representing a visitor message saved in the owner's inbox. */
+export interface InboxMessageRecord {
+  id: number;
+  created_at: string;
+  sender_name: string;
+  sender_email: string;
+  message: string;
+  visitor_id: string | null;
+  status: string;
+}
+
 /**
  * Main AI concierge Durable Object coordinating conversation lifecycle,
  * SQLite storage, guardrails, tool execution, and streaming generation.
@@ -41,7 +52,7 @@ export class PortfolioAgent extends AIChatAgent<Env, VisitorState> {
   };
 
   /**
-   * Initializes SQLite tables for retrieval metrics and rate events on Durable Object start.
+   * Initializes SQLite tables for retrieval metrics, rate events, and owner inbox on Durable Object start.
    */
   async onStart(): Promise<void> {
     try {
@@ -64,8 +75,59 @@ export class PortfolioAgent extends AIChatAgent<Env, VisitorState> {
       this.sql`
         CREATE INDEX IF NOT EXISTS idx_rate_events_ts ON rate_events(ts);
       `;
+      this.sql`
+        CREATE TABLE IF NOT EXISTS owner_inbox (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL DEFAULT (datetime('now')),
+          sender_name TEXT NOT NULL,
+          sender_email TEXT NOT NULL,
+          message TEXT NOT NULL,
+          visitor_id TEXT,
+          status TEXT NOT NULL DEFAULT 'new'
+        );
+      `;
     } catch (err) {
       console.error("Failed to initialize SQLite tables in PortfolioAgent:", err);
+    }
+  }
+
+  /**
+   * Saves a message submitted by a visitor for the portfolio owner.
+   * Exposes RPC callable method for cross-DO or admin interactions (SPECS.md §8.3, F-12).
+   */
+  @callable()
+  async saveInboxMessage(params: {
+    senderName: string;
+    senderEmail: string;
+    message: string;
+    visitorId?: string | null;
+  }): Promise<{ success: boolean; id: number }> {
+    this.sql`
+      INSERT INTO owner_inbox (sender_name, sender_email, message, visitor_id)
+      VALUES (${params.senderName}, ${params.senderEmail}, ${params.message}, ${params.visitorId ?? null});
+    `;
+    const rows = this.sql<{ id: number }>`
+      SELECT last_insert_rowid() as id;
+    `;
+    return { success: true, id: rows[0]?.id || 0 };
+  }
+
+  /**
+   * Retrieves all messages stored in the owner inbox.
+   * Exposes RPC callable method for admin inbox route (SPECS.md §9, F-12).
+   */
+  @callable()
+  async getInboxMessages(): Promise<InboxMessageRecord[]> {
+    try {
+      const rows = this.sql<InboxMessageRecord>`
+        SELECT id, created_at, sender_name, sender_email, message, visitor_id, status
+        FROM owner_inbox
+        ORDER BY id DESC;
+      `;
+      return rows;
+    } catch (err) {
+      console.warn("Failed to query owner_inbox in DO SQLite:", err);
+      return [];
     }
   }
 
@@ -191,6 +253,7 @@ export class PortfolioAgent extends AIChatAgent<Env, VisitorState> {
     const tools = buildTools({
       env: this.env,
       sql: this.sql.bind(this),
+      visitorId: this.name,
       getState: () => this.state,
       setState: (s) => this.setState(s),
     });

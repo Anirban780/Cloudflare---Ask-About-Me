@@ -36,7 +36,9 @@ import {
   BrainIcon,
   CaretDownIcon,
   BugIcon,
-  SparkleIcon
+  SparkleIcon,
+  GithubLogoIcon,
+  EnvelopeSimpleIcon
 } from "@phosphor-icons/react";
 
 // ── Theme toggle ──────────────────────────────────────────────────────
@@ -100,17 +102,30 @@ function ToolPartView({
 
   // Completed
   if (part.state === "output-available") {
-    const isSearch = toolName === "searchKnowledgeBase";
-    const resultCount = isSearch && (part.output as { results?: unknown[] })?.results?.length;
-    const label = isSearch
-      ? `Knowledge search (${resultCount || 0} chunks consulted)`
-      : toolName;
+    let label = toolName;
+    let icon = <GearIcon size={14} className="text-kumo-inactive" />;
+
+    if (toolName === "searchKnowledgeBase") {
+      const resultCount = (part.output as { results?: unknown[] })?.results?.length;
+      label = `Knowledge search (${resultCount || 0} chunks consulted)`;
+    } else if (toolName === "getGitHubProjects") {
+      const repos = (part.output as { repos?: unknown[] })?.repos;
+      const count = repos?.length || 0;
+      label = `GitHub repositories (${count} found)`;
+      icon = <GithubLogoIcon size={14} className="text-kumo-inactive" />;
+    } else if (toolName === "leaveMessageForOwner") {
+      label = "Message delivered to Anirban's inbox";
+      icon = <EnvelopeSimpleIcon size={14} className="text-kumo-success" />;
+    } else if (toolName === "rememberVisitorContext") {
+      label = "Visitor profile remembered";
+      icon = <BrainIcon size={14} className="text-purple-400" />;
+    }
 
     return (
       <div className="flex justify-start">
         <Surface className="max-w-[85%] px-4 py-2.5 rounded-xl ring ring-kumo-line">
           <div className="flex items-center gap-2 mb-1">
-            <GearIcon size={14} className="text-kumo-inactive" />
+            {icon}
             <Text size="xs" variant="secondary" bold>
               {label}
             </Text>
@@ -123,9 +138,75 @@ function ToolPartView({
     );
   }
 
-  // Needs approval
+  // Needs approval (F-12)
   if ("approval" in part && part.state === "approval-requested") {
     const approvalId = (part.approval as { id?: string })?.id;
+
+    if (toolName === "leaveMessageForOwner") {
+      const input = (part.input || {}) as {
+        senderName?: string;
+        senderEmail?: string;
+        message?: string;
+      };
+
+      return (
+        <div className="flex justify-start">
+          <Surface className="max-w-[85%] px-5 py-4 rounded-xl ring-2 ring-amber-500/50 bg-amber-500/5 shadow-sm space-y-3">
+            <div className="flex items-center gap-2">
+              <EnvelopeSimpleIcon size={18} className="text-amber-500" />
+              <Text size="sm" bold>
+                Confirm Message for Anirban Sarkar
+              </Text>
+            </div>
+            <div className="text-xs space-y-1 bg-kumo-control p-3 rounded-lg border border-kumo-line">
+              <div className="flex gap-2">
+                <span className="font-semibold text-kumo-subtle min-w-[50px]">From:</span>
+                <span className="text-kumo-default font-medium">
+                  {input.senderName || "Visitor"}
+                </span>
+                {input.senderEmail && (
+                  <span className="text-kumo-inactive">({input.senderEmail})</span>
+                )}
+              </div>
+              <div className="flex gap-2 pt-1 border-t border-kumo-line/50">
+                <span className="font-semibold text-kumo-subtle min-w-[50px]">Message:</span>
+                <span className="text-kumo-default whitespace-pre-wrap">
+                  {input.message || "(empty message)"}
+                </span>
+              </div>
+            </div>
+            <p className="text-[11px] text-kumo-inactive">
+              This message will be stored in Anirban's private inbox. No data is stored until you confirm.
+            </p>
+            {approvalId && (
+              <div className="flex gap-2 pt-1">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  icon={<CheckCircleIcon size={14} />}
+                  onClick={() =>
+                    addToolApprovalResponse({ id: approvalId, approved: true })
+                  }
+                >
+                  Confirm & Send
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  icon={<XCircleIcon size={14} />}
+                  onClick={() =>
+                    addToolApprovalResponse({ id: approvalId, approved: false })
+                  }
+                >
+                  Cancel
+                </Button>
+              </div>
+            )}
+          </Surface>
+        </div>
+      );
+    }
+
     return (
       <div className="flex justify-start">
         <Surface className="max-w-[85%] px-4 py-3 rounded-xl ring-2 ring-kumo-warning">
@@ -171,6 +252,12 @@ function ToolPartView({
   const runningText =
     toolName === "searchKnowledgeBase"
       ? "Searching Anirban's documents..."
+      : toolName === "getGitHubProjects"
+      ? "Checking GitHub for repositories..."
+      : toolName === "leaveMessageForOwner"
+      ? "Preparing message for Anirban..."
+      : toolName === "rememberVisitorContext"
+      ? "Updating visitor profile..."
       : `Running ${toolName}...`;
 
   return (
@@ -389,9 +476,10 @@ function Chat() {
                   <div className="flex flex-wrap justify-center gap-2 pt-2">
                     {[
                       "Summarize Anirban's engineering background in 30 seconds",
+                      "What open-source repositories has Anirban built on GitHub?",
                       "What projects has Anirban built on Cloudflare & cloud systems?",
                       "Which skills match Software / Data / DevOps roles?",
-                      "What are Anirban's core programming languages and tech stack?"
+                      "I'd like to leave a message for Anirban regarding an engineering opportunity"
                     ].map((prompt) => (
                       <Button
                         key={prompt}

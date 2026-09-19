@@ -153,19 +153,36 @@
 
 ---
 
-### Upcoming — Slice S9: P1 Features (GitHub Projects & Owner Messaging)
+### 2026-09-19 — Slice S9: P1 Features (GitHub Projects & Owner Messaging)
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Create D1 database or SQLite table for `owner_inbox` per SPECS §5.2 and §8.3 | `src/agent/portfolio-agent.ts`, `wrangler.jsonc` | ⬜ Pending |
-| 2 | Implement `getGitHubProjects` agent tool with caching and rate limit handling | `src/agent/tools.ts` | ⬜ Pending |
-| 3 | Implement `leaveMessageForOwner` tool with `needsApproval: true` for Human-in-the-Loop | `src/agent/tools.ts` | ⬜ Pending |
-| 4 | Implement admin inbox endpoint `GET /api/admin/inbox` with Bearer auth | `src/server.ts` | ⬜ Pending |
-| 5 | Implement non-streaming evaluation ask endpoint `POST /api/admin/ask` | `src/server.ts` | ⬜ Pending |
+| 1 | Created GitHub integration module `fetchGitHubRepos` with topic filter, fork removal, and rate-limit fallbacks | `src/agent/github.ts` | ✅ Done |
+| 2 | Created Owner Inbox helper module with Zod validation schema and input sanitization | `src/agent/inbox.ts` | ✅ Done |
+| 3 | Added `getGitHubProjects` and `leaveMessageForOwner` (with `needsApproval: true`) tools to agent registry | `src/agent/tools.ts` | ✅ Done |
+| 4 | Added `owner_inbox` SQLite table and `@callable()` methods in `PortfolioAgent` for cross-DO messaging | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 5 | Updated system prompt with GitHub repository search and owner contact messaging instructions | `src/agent/system-prompt.ts` | ✅ Done |
+| 6 | Implemented authenticated admin routes `GET /api/admin/inbox` and `POST /api/admin/ask` (F-16) | `src/server.ts` | ✅ Done |
+| 7 | Enhanced UI `ToolPartView` with custom approval card for messaging and live tool indicators | `src/app.tsx` | ✅ Done |
+| 8 | Created unit tests for GitHub integration covering 6 scenarios | `test/github.test.ts` | ✅ Done (6/6 passed) |
+| 9 | Created unit tests for Owner Inbox validation and sanitization covering 7 scenarios | `test/inbox.test.ts` | ✅ Done (7/7 passed) |
+| 10 | Created Slice S9 execution plan and prompt history | `docs/plans/S09.md`, `prompt-history/2026-09-19-S09-antigravity.md` | ✅ Done |
+| 11 | Verified all tests (`npm test`: 49/49 passed), types (`npm run typecheck`: 0 errors), and build (`npx vite build`) | Entire codebase | ✅ Done |
+
+---
+
+### Upcoming — Slice S10: Polish, Documentation & Submission Readiness
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Finalize comprehensive `README.md` following SPECS §15.1 outline (pitch, demo URL, diagram, decisions, evals) | `README.md` | ⬜ Pending |
+| 2 | Document architecture decision log in `docs/SPECS.md` §17 and verified questions in `docs/reference/` | `docs/` | ⬜ Pending |
+| 3 | Final verification: tests, typecheck, evaluation runs, git secret audit, incognito check | Entire repo | ⬜ Pending |
 
 ---
 
 > **Note:** This file is updated slice-by-slice as the project progresses.
+
 
 
 

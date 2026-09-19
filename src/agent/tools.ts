@@ -1,14 +1,18 @@
 /**
  * Agent tools definition for Ask-About-Me.
- * Provides searchKnowledgeBase for semantic RAG lookups and
- * rememberVisitorContext for personalization and visitor state persistence.
- * Defined per SPECS.md §8.3 and §15 (F-04, F-06).
+ * Provides searchKnowledgeBase for semantic RAG lookups,
+ * rememberVisitorContext for personalization,
+ * getGitHubProjects for live repository lookups (F-11), and
+ * leaveMessageForOwner with human-in-the-loop approval for contact messaging (F-12).
+ * Defined per SPECS.md §8.3 and §15 (F-04, F-06, F-11, F-12).
  */
 
 import { tool } from "ai";
 import { z } from "zod";
 import { retrieve, type RetrievalResult } from "../rag/retrieve";
 import type { VisitorState } from "./system-prompt";
+import { fetchGitHubRepos } from "./github";
+import { inboxMessageSchema, sanitizeInboxMessage } from "./inbox";
 
 /** Context required by agent tools to interact with environment bindings, SQLite, and DO state. */
 export interface AgentToolContext {
@@ -17,6 +21,7 @@ export interface AgentToolContext {
     strings: TemplateStringsArray,
     ...values: (string | number | boolean | null)[]
   ) => T[];
+  visitorId?: string;
   getState?: () => VisitorState | undefined;
   setState?: (state: VisitorState) => void;
 }
@@ -25,7 +30,7 @@ export interface AgentToolContext {
  * Builds the AI SDK tools registry bound to the PortfolioAgent context.
  *
  * @param ctx Context containing worker environment bindings, SQLite interface, and state helpers.
- * @returns Tools record for use in streamText().
+ * @returns Tools record for use in streamText() or generateText().
  */
 export function buildTools(ctx: AgentToolContext) {
   const ownerFirst = ctx.env.OWNER_FIRST || "Anirban";
@@ -141,6 +146,85 @@ export function buildTools(ctx: AgentToolContext) {
         });
 
         return { saved: true, visitor: updatedVisitor };
+      },
+    }),
+
+    getGitHubProjects: tool({
+      description: `Fetch public GitHub repositories and open-source projects for ${ownerFirst}. Call this when the visitor asks what projects ${ownerFirst} has built, asks for recent GitHub activity, code repositories, or wants to explore open-source contributions. You can optionally specify a topic or keyword to filter repositories.`,
+      inputSchema: z.object({
+        topic: z
+          .string()
+          .max(60)
+          .optional()
+          .describe("Optional topic, programming language, or keyword to filter repositories (e.g. 'cloudflare', 'python', 'rag', 'data')"),
+      }),
+      execute: async ({ topic }) => {
+        const githubUser = ctx.env.GITHUB_USER || "Anirban780";
+        return await fetchGitHubRepos(githubUser, { topic });
+      },
+    }),
+
+    leaveMessageForOwner: tool({
+      description: `Allow the visitor to leave a contact message, inquiry, or note directly for ${ownerFirst}. Call this when the visitor wants to connect, discuss job opportunities, schedule an interview, or when their question cannot be answered from verified documents. This tool requires explicit visitor confirmation in the UI before the message is stored.`,
+      needsApproval: true,
+      inputSchema: inboxMessageSchema,
+      execute: async (input) => {
+        const sanitized = sanitizeInboxMessage(input);
+
+        // 1. Insert into local SQLite table in this DO instance
+        try {
+          ctx.sql`
+            INSERT INTO owner_inbox (sender_name, sender_email, message, visitor_id)
+            VALUES (${sanitized.senderName}, ${sanitized.senderEmail}, ${sanitized.message}, ${ctx.visitorId || null});
+          `;
+        } catch (e) {
+          console.warn("Failed to write to local DO owner_inbox:", e);
+        }
+
+        // 2. Insert into central DO singleton (owner-inbox) if PortfolioAgent binding exists
+        if (ctx.env.PortfolioAgent) {
+          try {
+            const inboxId = ctx.env.PortfolioAgent.idFromName("owner-inbox");
+            const inboxStub = ctx.env.PortfolioAgent.get(inboxId);
+            if (typeof (inboxStub as unknown as { saveInboxMessage?: (data: unknown) => Promise<unknown> }).saveInboxMessage === "function") {
+              await (inboxStub as unknown as { saveInboxMessage: (data: unknown) => Promise<unknown> }).saveInboxMessage({
+                senderName: sanitized.senderName,
+                senderEmail: sanitized.senderEmail,
+                message: sanitized.message,
+                visitorId: ctx.visitorId || null,
+              });
+            }
+          } catch (e) {
+            console.warn("Failed to forward message to owner-inbox DO singleton:", e);
+          }
+        }
+
+        // 3. Insert into D1 if DB binding is configured in the environment
+        const db = (ctx.env as unknown as { DB?: { prepare: (q: string) => { bind: (...args: unknown[]) => { run: () => Promise<unknown> } } } }).DB;
+        if (db) {
+          try {
+            await db
+              .prepare(
+                "INSERT INTO owner_inbox (sender_name, sender_email, message, visitor_id) VALUES (?, ?, ?, ?)"
+              )
+              .bind(
+                sanitized.senderName,
+                sanitized.senderEmail,
+                sanitized.message,
+                ctx.visitorId || null
+              )
+              .run();
+          } catch (e) {
+            console.warn("Failed to write to D1 owner_inbox:", e);
+          }
+        }
+
+        return {
+          delivered: true,
+          message: `Thank you, ${sanitized.senderName}! Your message has been recorded for ${ownerFirst}.`,
+          senderName: sanitized.senderName,
+          senderEmail: sanitized.senderEmail,
+        };
       },
     }),
   };

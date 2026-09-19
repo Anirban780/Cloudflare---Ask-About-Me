@@ -188,6 +188,32 @@
 - **Commits:** `4923abd` (`feat: retrieval evals and golden set`)
 - **Open questions:** None; S8 retrieval evals and golden set complete.
 
+---
+
+## 2026-09-19 — Session 10 — Slice S9: P1 Features (GitHub Projects & Owner Messaging) — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Implement live GitHub project exploration (`getGitHubProjects`, F-11), Human-In-The-Loop contact messaging with visitor approval (`leaveMessageForOwner`, F-12), `owner_inbox` persistence in DO SQLite and central DO singleton, authenticated admin routes (`GET /api/admin/inbox`, `POST /api/admin/ask`), and dedicated UI approval card styling.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S09-antigravity.md](prompt-history/2026-09-19-S09-antigravity.md): "yes proceed with slice s9 and follow the procedure implemented in earlier steps"
+- **What worked:**
+  - Implemented `src/agent/github.ts` with `fetchGitHubRepos()` querying `https://api.github.com/users/Anirban780/repos?sort=pushed&per_page=30`, caching via Workers `cf: { cacheTtl: 3600 }`, excluding forks (`!repo.fork`), matching topics/technologies across name, description, language, and topics, capping at 8 results, and gracefully handling 403/429 rate limits or network issues with direct profile fallbacks.
+  - Implemented `src/agent/inbox.ts` with `inboxMessageSchema` and `sanitizeInboxMessage()` validating input limits (senderName ≤80, senderEmail valid email, message ≤1000) and sanitizing line breaks and tabs.
+  - Added `getGitHubProjects` and `leaveMessageForOwner` to `src/agent/tools.ts` with `needsApproval: true` on messaging to enforce Human-In-The-Loop visitor confirmation before message storage.
+  - Added `owner_inbox` SQLite table in `PortfolioAgent.onStart()`, alongside `@callable() saveInboxMessage()` and `@callable() getInboxMessages()` RPC methods in `src/agent/portfolio-agent.ts`.
+  - Updated `src/agent/system-prompt.ts` with instructions to call `getGitHubProjects` for GitHub repositories/projects and `leaveMessageForOwner` when unanswerable questions or hiring opportunities arise.
+  - Added authenticated admin routes in `src/server.ts`:
+    - `GET /api/admin/inbox`: queries `owner_inbox` via D1 or central `owner-inbox` Durable Object singleton.
+    - `POST /api/admin/ask`: non-streaming QA generation endpoint for automated evals (F-16).
+  - Enhanced `src/app.tsx` with dedicated approval card for `leaveMessageForOwner` (previewing sender, email, message quote with "Confirm & Send" / "Cancel" buttons), dynamic tool activity indicators ("Checking GitHub for repositories...", "Preparing message for Anirban..."), and empty-state suggestion chips.
+  - Created unit test suites in `test/github.test.ts` (6 tests) and `test/inbox.test.ts` (7 tests).
+  - Verified verification gates: `npm test` passed 49/49 tests across 6 files (100% green), `npm run typecheck` passed with 0 errors, and `npx vite build` succeeded.
+- **What failed / was corrected:**
+  - Kumo `<Text>` component on the approval card title threw TypeScript error because `<Text>` does not accept `className`; removed `className` and used standard Kumo typography props.
+- **Human decisions made:** Proceed with Slice S9 P1 features.
+- **Commits:** `dd0c6ee` (`feat: github tool and owner inbox`)
+- **Open questions:** None; S9 P1 features complete.
+
+
 
 
 
