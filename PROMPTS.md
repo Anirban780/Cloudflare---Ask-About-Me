@@ -144,7 +144,7 @@
   - `RETRIEVAL_MODE` type union in `worker-configuration.d.ts` required string assertion for `"always"` check.
   - Kumo `<Text>` component rejected `className`; wrapped in styled `<span>` for truncation.
 - **Human decisions made:** Proceed with Slice S6 RAG tool and citations.
-- **Commits:** `feat: rag tool with citations`
+- **Commits:** `8c6835c` (`feat: rag tool with citations`)
 - **Open questions:** None; S6 RAG tool and citations complete.
 
 
