@@ -165,7 +165,7 @@
 - **What failed / was corrected:**
   - `useAgent<PortfolioAgent>` in `src/app.tsx` defaulted State type parameter to unknown/self; updated to `useAgent<PortfolioAgent, VisitorState>` with imported `VisitorState`.
 - **Human decisions made:** Proceed with Slice S7 memory and guardrails.
-- **Commits:** `feat: visitor memory and guardrails`
+- **Commits:** `27a898a` (`feat: visitor memory and guardrails`)
 - **Open questions:** None; S7 memory and guardrails complete.
 
 
