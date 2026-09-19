@@ -247,7 +247,7 @@
   - Appended decision D13 to `docs/SPECS.md §17` and `README.md §4`.
   - All 7 test suites passed (51/51 tests green), `oxlint` and `tsc` passed with 0 errors, and `vite build` completed successfully.
 - **Human decisions made:** Approved committing and pushing to GitHub remote repository for demo readiness.
-- **Commits:** `fix(agent): deduplicate streaming tool call deltas with safe AI binding`
+- **Commits:** `fix(agent): deduplicate streaming tool call deltas with safe AI binding` (`7f9c5f0`)
 - **Open questions:** None; ready for live deployment and demo.
 
 
