@@ -51,17 +51,34 @@
 | 6 | Rebranded `src/app.tsx`: "Ask-About-Me" concierge UI, suggestion chips, persistent visitor ID, removed starter demo tools/MCP | `src/app.tsx` | ✅ Done |
 | 7 | Regenerated Wrangler types | `worker-configuration.d.ts` | ✅ Done |
 | 8 | Verified TypeScript compilation clean (`npm run typecheck`) | `src/`, `worker-configuration.d.ts` | ✅ Done (0 errors) |
+| 9 | Committed Slice S2 (`7763605`) | Git repository | ✅ Done |
 
 ---
 
-### Upcoming — Slice S3: Chunker & Tests
+### 2026-09-19 — Slice S3: Markdown Chunker & Unit Tests
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Create `src/config.ts` with constants per SPECS §5.4 | `src/config.ts` | ⬜ Pending |
-| 2 | Implement pure `chunkMarkdown` in `src/rag/chunker.ts` | `src/rag/chunker.ts` | ⬜ Pending |
-| 3 | Install `vitest` dev dependency per SKILLS R7 allowlist | `package.json` | ⬜ Pending |
-| 4 | Implement unit tests for all 9 chunker properties | `test/chunker.test.ts` | ⬜ Pending |
+| 1 | Created Slice S3 execution plan | `docs/plans/S03.md` | ✅ Done |
+| 2 | Created `src/config.ts` with all constants per SPECS §5.4 | `src/config.ts` | ✅ Done |
+| 3 | Implemented pure `chunkMarkdown` in `src/rag/chunker.ts` per SPECS §6.3 | `src/rag/chunker.ts` | ✅ Done |
+| 4 | Installed `vitest` dev dependency per SKILLS R7 allowlist | `package.json` | ✅ Done |
+| 5 | Created `vitest.config.ts` for clean node-based unit testing | `vitest.config.ts` | ✅ Done |
+| 6 | Added `"test": "vitest run"` script to `package.json` | `package.json` | ✅ Done |
+| 7 | Implemented unit tests for all 9 chunker properties | `test/chunker.test.ts` | ✅ Done |
+| 8 | Executed `npm test` verifying 9/9 tests pass (100% green) | `test/chunker.test.ts` | ✅ Done |
+| 9 | Verified TypeScript compilation clean (`npm run typecheck`) | Entire codebase | ✅ Done (0 errors) |
+
+---
+
+### Upcoming — Slice S4: Infrastructure Bindings
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Vectorize index `ask-about-me-kb` binding | `wrangler.jsonc` | ⬜ Pending |
+| 2 | Ingest workflow binding | `wrangler.jsonc` | ⬜ Pending |
+| 3 | Update `/api/health` with Vectorize readiness | `src/server.ts` | ⬜ Pending |
+| 4 | Regenerate Wrangler types | `worker-configuration.d.ts` | ⬜ Pending |
 
 ---
 

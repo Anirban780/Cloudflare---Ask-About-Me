@@ -53,5 +53,26 @@
   - Successfully regenerated types (`npx wrangler types`) and verified `npm run typecheck` (0 errors).
 - **What failed / was corrected:** N/A.
 - **Human decisions made:** Proceed with Slice S2.
-- **Commits:** Pending S2 commit (`feat: llama 3.3 persona agent`).
-- **Open questions:** None.
+- **Commits:** `7763605` (`feat: llama 3.3 persona agent`)
+- **Open questions:** None; S2 completed cleanly.
+
+---
+
+## 2026-09-19 — Session 4 — Slice S3: Markdown Chunker & Unit Tests — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Create `src/config.ts` constants, implement pure `chunkMarkdown` in `src/rag/chunker.ts`, install `vitest`, implement unit tests in `test/chunker.test.ts` for all 9 properties, and verify test gate.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S03-antigravity.md](prompt-history/2026-09-19-S03-antigravity.md): "yes now you can proceed to slice s3 and then keep track of all the changes and prompts given and update them accordingly in md files, and at last give me checklist in which files you have updated it, please proceed carefully and also provide document style comments in codebase as well"
+- **What worked:**
+  - Implemented `src/config.ts` with all constants (`CHUNK_MAX_CHARS: 900`, `CHUNK_OVERLAP_CHARS: 120`, `CHUNK_MIN_CHARS: 40`, `EMBED_BATCH_SIZE: 50`, `MAX_CHUNKS_PER_DOC: 100`, etc.) and JSDoc comments.
+  - Implemented pure `chunkMarkdown` in `src/rag/chunker.ts` handling markdown heading hierarchy (# to ###), greedy paragraph packing, sentence splitting, intra-section overlap, and embedText generation.
+  - Installed `vitest` (allowlisted dev dependency) and configured `vitest.config.ts`.
+  - Added `"test": "vitest run"` script in `package.json`.
+  - Implemented comprehensive unit tests in `test/chunker.test.ts` covering all 9 properties from SPECS.md §6.3.
+  - Verification gates passed: `npm test` (9/9 tests passed in ~290ms) and `npm run typecheck` (0 errors).
+- **What failed / was corrected:**
+  - Vitest initially loaded `vite.config.ts` with `@cloudflare/vite-plugin` which attempted to reach remote Cloudflare server; resolved cleanly by creating `vitest.config.ts` for node environment.
+  - Test fixture in Property 5 had test string containing the section name; fixed test string.
+- **Human decisions made:** Proceed with Slice S3.
+- **Commits:** Pending S3 commit (`feat: markdown chunker with tests`).
+- **Open questions:** None; S3 chunker fully verified.
