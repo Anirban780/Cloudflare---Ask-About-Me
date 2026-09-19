@@ -185,7 +185,7 @@
 - **What failed / was corrected:**
   - `BAIT-08` initially contained JS string concatenation in `evals/bait.json`; replaced with valid raw JSON string.
 - **Human decisions made:** Proceed with Slice S8 evaluations and golden suite.
-- **Commits:** `feat: retrieval evals and golden set`
+- **Commits:** `4923abd` (`feat: retrieval evals and golden set`)
 - **Open questions:** None; S8 retrieval evals and golden set complete.
 
 
