@@ -134,7 +134,7 @@ export async function fetchGitHubRepos(
     );
 
     return { repos, url: profileUrl };
-  } catch (err) {
+  } catch (_err) {
     return {
       repos: [],
       error: `Could not reach GitHub at this moment. Please visit ${profileUrl}.`,

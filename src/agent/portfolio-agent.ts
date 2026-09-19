@@ -7,6 +7,7 @@
 import { AIChatAgent, type OnChatMessageOptions } from "@cloudflare/ai-chat";
 import { callable } from "agents";
 import { createWorkersAI } from "workers-ai-provider";
+import { createSafeAIBinding } from "./ai-binding";
 import { streamText, convertToModelMessages, pruneMessages, stepCountIs } from "ai";
 import { buildSystemPrompt, type VisitorState } from "./system-prompt";
 import { buildTools } from "./tools";
@@ -248,7 +249,7 @@ export class PortfolioAgent extends AIChatAgent<Env, VisitorState> {
     }
 
     // 6. Tools and model configuration
-    const workersai = createWorkersAI({ binding: this.env.AI });
+    const workersai = createWorkersAI({ binding: createSafeAIBinding(this.env.AI) });
     const modelName = this.env.CHAT_MODEL || "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
     const tools = buildTools({
       env: this.env,

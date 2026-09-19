@@ -111,6 +111,9 @@ Full decision log is in [`docs/SPECS.md §17`](docs/SPECS.md).
 | D8 | GitHub data via edge-cached `fetch` | Live repo data with no extra binding; 1-hour Workers cache avoids API rate limits |
 | D9 | Workers AI only — no external LLM keys | Matches the Cloudflare assignment; keeps the repo completely secret-free for public review |
 | D10 | Third-person persona, not digital twin | Honest identity prevents impersonation; agent says "Anirban built X" not "I built X" |
+| D11 | HITL confirmation on owner messaging | `needsApproval: true` ensures visitors inspect message details before storage |
+| D12 | Three-tier owner_inbox fallback | DO SQLite local → singleton DO → D1; works without mandatory D1 provisioning |
+| D13 | `createSafeAIBinding` stream sanitizer | Prevents tool call argument doubling caused by Workers AI emitting both native (`tool_calls`) and OpenAI (`choices.delta.tool_calls`) in the same SSE chunk |
 
 ### Tool vs. Always Retrieval
 

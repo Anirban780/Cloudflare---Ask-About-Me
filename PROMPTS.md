@@ -228,8 +228,28 @@
   - Ran `npm test` (49/49 passed, 6 files) and `npm run typecheck` (0 errors). All verification gates green.
 - **What failed / was corrected:** N/A — all S10 documentation tasks completed cleanly.
 - **Human decisions made:** Proceed with Slice S10 documentation and submission readiness. No deployment requested.
-- **Commits:** `docs: final readme and architecture`
+- **Commits:** `docs: final readme and architecture` (`33071ae`)
 - **Open questions:** None; project is submission-ready pending user deploying and getting live URL.
+
+---
+
+## 2026-09-19 — Session 12 — Slice S11: Streaming Tool Call Argument Deduplication Fix & Remote Push — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Diagnose and resolve tool call argument corruption in streaming mode (`workers-ai-provider`), implement stream deduplication proxy, add automated regression testing, update documentation, and push to GitHub remote repository.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S11-tool-stream-fix-antigravity.md](prompt-history/2026-09-19-S11-tool-stream-fix-antigravity.md): "check what;'s wrong ... ok i think everything is okay and is ready for demo, please push it on github after addressing this changes in appropraite md files and also committing them, and also telling about the use cases and all about this"
+- **What worked:**
+  - Diagnosed root cause: `workers-ai-provider` v3.3.1 processed both `chunk.tool_calls` and `choices[0].delta.tool_calls` per SSE event, causing doubled argument tokens (`AnAnirirbanban...`) and JSON parse errors.
+  - Implemented `createSafeAIBinding` in `src/agent/ai-binding.ts` to intercept `env.AI.run(...)` and strip duplicate top-level fields when `choices[0].delta` exists.
+  - Integrated `createSafeAIBinding` into `PortfolioAgent` Durable Object in `src/agent/portfolio-agent.ts`.
+  - Fixed minor lint issue in `src/agent/github.ts` (`catch (_err)`).
+  - Created automated regression test in `test/ai-binding.test.ts` verifying tool call argument deduplication.
+  - Appended decision D13 to `docs/SPECS.md §17` and `README.md §4`.
+  - All 7 test suites passed (51/51 tests green), `oxlint` and `tsc` passed with 0 errors, and `vite build` completed successfully.
+- **Human decisions made:** Approved committing and pushing to GitHub remote repository for demo readiness.
+- **Commits:** `fix(agent): deduplicate streaming tool call deltas with safe AI binding`
+- **Open questions:** None; ready for live deployment and demo.
+
 
 
 

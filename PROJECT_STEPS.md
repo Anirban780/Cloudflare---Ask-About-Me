@@ -187,6 +187,21 @@
 
 ---
 
+### 2026-09-19 — Slice S11: Streaming Deduplication Fix & Remote Readiness
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Diagnosed streaming tool call corruption: `workers-ai-provider` v3.3.1 processed both `chunk.tool_calls` and `choices[0].delta.tool_calls` per SSE event, causing doubled argument fragments (`AnAnirirbanban...`) and JSON parse errors | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 2 | Created `createSafeAIBinding` stream proxy wrapper in `src/agent/ai-binding.ts` to drop duplicate top-level fields when `choices[0].delta` exists | `src/agent/ai-binding.ts` | ✅ Done |
+| 3 | Integrated `createSafeAIBinding` into `PortfolioAgent` Durable Object | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 4 | Fixed unused error variable lint error in `src/agent/github.ts` | `src/agent/github.ts` | ✅ Done |
+| 5 | Created automated regression test verifying exact tool call argument deduplication | `test/ai-binding.test.ts` | ✅ Done (2/2 passed) |
+| 6 | Verified all test suites (`npm test`: 51/51 passed across 7 files) | Entire test suite | ✅ Done |
+| 7 | Verified type safety and lint (`oxlint src/`, `tsc --noEmit`: 0 errors) and build (`vite build`: 0 errors) | Entire codebase | ✅ Done |
+| 8 | Configured GitHub remote repository and pushed codebase to `origin/master` | Git repository | ✅ Done |
+
+---
+
 > **Note:** This file is updated slice-by-slice as the project progresses.
 
 
