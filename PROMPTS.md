@@ -147,4 +147,26 @@
 - **Commits:** `8c6835c` (`feat: rag tool with citations`)
 - **Open questions:** None; S6 RAG tool and citations complete.
 
+---
+
+## 2026-09-19 — Session 8 — Slice S7: Visitor Memory & Guardrails — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Implement rate limiting (`decideRate`), message length caps (`checkInputLength`), static UI response streamer, visitor personalization tool (`rememberVisitorContext`), privacy reset RPC (`@callable() forgetVisitor()`), and UI memory banner.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S07-antigravity.md](prompt-history/2026-09-19-S07-antigravity.md): "yes now proceed with slice s7 following th e earlier steps implementing procedure"
+- **What worked:**
+  - Created `src/agent/guards.ts` with pure `decideRate` (sliding 1-hour window for 30 msgs/hr), `checkInputLength` (1,000 char cap), and `createStaticUIMessageResponse` (streaming static responses without LLM call).
+  - Implemented unit tests in `test/guards.test.ts` covering 10 boundary conditions for rate limiting and input caps.
+  - Implemented `rememberVisitorContext` tool in `src/agent/tools.ts` with Zod input schema, string sanitization, 60-character length caps, interest deduplication, and state updates.
+  - Added `@callable() forgetVisitor()` RPC in `src/agent/portfolio-agent.ts` resetting visitor state, clearing SQLite chat history and retrieval logs, and pruning rate events older than 1 hour (preserving the active hour window to prevent rate limit evasion).
+  - Wired rate limiting, length checks, and 30-day retrieval log retention into `PortfolioAgent.onChatMessage`.
+  - Added dynamic `Remembered` memory chip banner and "Forget me" button in `src/app.tsx`.
+  - Verified verification gates: `npm test` passed all 36 tests (chunker, citations, retrieve, guards) and `npm run typecheck` passed with 0 errors.
+- **What failed / was corrected:**
+  - `useAgent<PortfolioAgent>` in `src/app.tsx` defaulted State type parameter to unknown/self; updated to `useAgent<PortfolioAgent, VisitorState>` with imported `VisitorState`.
+- **Human decisions made:** Proceed with Slice S7 memory and guardrails.
+- **Commits:** `feat: visitor memory and guardrails`
+- **Open questions:** None; S7 memory and guardrails complete.
+
+
 

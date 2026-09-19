@@ -123,18 +123,34 @@
 
 ---
 
-### Upcoming — Slice S7: Memory & Guardrails
+### 2026-09-19 — Slice S7: Visitor Memory & Guardrails
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Implement `decideRate(events, now, limit)` pure rate limiter logic and unit tests | `src/agent/guards.ts`, `test/guards.test.ts` | ⬜ Pending |
-| 2 | Implement `rememberVisitorContext` tool and state persistence | `src/agent/tools.ts`, `src/agent/portfolio-agent.ts` | ⬜ Pending |
-| 3 | Implement `@callable() forgetVisitor()` RPC for privacy and memory reset | `src/agent/portfolio-agent.ts` | ⬜ Pending |
-| 4 | Add memory chip and "Forget me" button in frontend UI | `src/app.tsx` | ⬜ Pending |
-| 5 | Integrate input length validation banner before model call | `src/agent/portfolio-agent.ts`, `src/app.tsx` | ⬜ Pending |
+| 1 | Implemented pure guardrail functions (`decideRate`, `checkInputLength`, `createStaticUIMessageResponse`) | `src/agent/guards.ts` | ✅ Done |
+| 2 | Created unit tests for guards covering 10 boundary conditions | `test/guards.test.ts` | ✅ Done (10/10 passed) |
+| 3 | Implemented `rememberVisitorContext` tool with Zod schema and state persistence | `src/agent/tools.ts` | ✅ Done |
+| 4 | Implemented `@callable() forgetVisitor()` RPC for privacy compliance | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 5 | Integrated rate limiting, input length caps, and 30-day retention into `PortfolioAgent` | `src/agent/portfolio-agent.ts` | ✅ Done |
+| 6 | Added dynamic `Remembered` memory chip banner, "Forget me" button, and privacy indicator | `src/app.tsx` | ✅ Done |
+| 7 | Created Slice S7 execution plan and prompt history | `docs/plans/S07.md`, `prompt-history/2026-09-19-S07-antigravity.md` | ✅ Done |
+| 8 | Verified all tests (`npm test`: 36/36 passed) and types (`npm run typecheck`: 0 errors) | Entire codebase | ✅ Done |
+
+---
+
+### Upcoming — Slice S8: Evals & Golden Suite
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Author golden evaluation suite with ≥20 realistic recruiter/engineer queries | `evals/golden.json` | ⬜ Pending |
+| 2 | Author hallucination and prompt-injection bait suite | `evals/bait.json` | ⬜ Pending |
+| 3 | Implement automated retrieval eval harness measuring hit@1, hit@5, and mean score | `evals/run-retrieval-eval.ts` | ⬜ Pending |
+| 4 | Add `"eval:retrieval": "tsx evals/run-retrieval-eval.ts"` script to `package.json` | `package.json` | ⬜ Pending |
+| 5 | Generate evaluation baseline report and tune `MIN_SCORE` threshold if needed | `evals/results.md` | ⬜ Pending |
 
 ---
 
 > **Note:** This file is updated slice-by-slice as the project progresses.
+
 
 

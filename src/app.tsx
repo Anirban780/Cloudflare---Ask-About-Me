@@ -5,6 +5,7 @@ import { useAgent } from "agents/react";
 import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { getToolName, isToolUIPart, type UIMessage } from "ai";
 import type { PortfolioAgent } from "./server";
+import type { VisitorState } from "./agent/system-prompt";
 import {
   Badge,
   Button,
@@ -208,7 +209,7 @@ function Chat() {
     return id;
   });
 
-  const agent = useAgent<PortfolioAgent>({
+  const agent = useAgent<PortfolioAgent, VisitorState>({
     agent: "PortfolioAgent",
     name: visitorId,
     onOpen: useCallback(() => setConnected(true), []),
@@ -232,6 +233,37 @@ function Chat() {
   });
 
   const isStreaming = status === "streaming" || status === "submitted";
+
+  const visitor = agent.state?.visitor;
+  const hasMemory = Boolean(
+    visitor &&
+      (visitor.name ||
+        visitor.company ||
+        visitor.roleHiringFor ||
+        (visitor.interests && visitor.interests.length > 0))
+  );
+
+  const memoryParts: string[] = [];
+  if (visitor?.company) memoryParts.push(visitor.company);
+  if (visitor?.roleHiringFor) memoryParts.push(visitor.roleHiringFor);
+  if (visitor?.name) memoryParts.push(visitor.name);
+  if (visitor?.interests && visitor.interests.length > 0) {
+    memoryParts.push(visitor.interests.slice(0, 2).join(", "));
+  }
+  const memorySummary = memoryParts.join(" · ") || "Visitor profile";
+
+  const handleForget = useCallback(async () => {
+    try {
+      await agent.call("forgetVisitor");
+      clearHistory();
+      toasts.add({
+        title: "Memory cleared",
+        description: "Your visitor profile and conversation history have been erased."
+      });
+    } catch (err) {
+      console.error("Failed to forget visitor:", err);
+    }
+  }, [agent, clearHistory, toasts]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -313,6 +345,34 @@ function Chat() {
           </div>
         </div>
       </header>
+
+      {/* Memory Chip Banner */}
+      {hasMemory && (
+        <div className="bg-purple-500/10 border-b border-purple-500/20 px-5 py-2 animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="max-w-3xl mx-auto flex items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <Badge variant="secondary">
+                <BrainIcon size={12} className="mr-1 text-purple-400" />
+                Remembered
+              </Badge>
+              <span className="text-kumo-default font-medium truncate max-w-[260px] sm:max-w-md">
+                {memorySummary}
+              </span>
+              <span className="hidden md:inline text-kumo-inactive text-[11px]">
+                • Stored locally for this browser
+              </span>
+            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleForget}
+              title="Erase stored visitor memory and clear chat history"
+            >
+              Forget me
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto">
