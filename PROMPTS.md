@@ -247,8 +247,28 @@
   - Appended decision D13 to `docs/SPECS.md §17` and `README.md §4`.
   - All 7 test suites passed (51/51 tests green), `oxlint` and `tsc` passed with 0 errors, and `vite build` completed successfully.
 - **Human decisions made:** Approved committing and pushing to GitHub remote repository for demo readiness.
-- **Commits:** `fix(agent): deduplicate streaming tool call deltas with safe AI binding` (`7f9c5f0`)
+- **Commits:** `fix(agent): deduplicate streaming tool call deltas with safe AI binding` (`7f9c5f0`), `docs: update PROMPTS.md with S11 commit hash` (`2537b09`)
 - **Open questions:** None; ready for live deployment and demo.
+
+---
+
+## 2026-09-19 — Session 13 — Slice S12: Resume v5 & GitHub Profile Synchronization for RAG — Tool: Google Antigravity
+
+- **Goal:** Update the RAG knowledge base markdown files with real data from `Anirban_Sarkar_Resume_v5.pdf` and live GitHub repository information for `Anirban780`.
+- **Key prompts:**
+  - "ok can you do one thing, @[Anirban_Sarkar_Resume_v5.pdf] i have added my resume here, please update the necessary files immediately and also use github mcp server to get my profile info and top repositories and use them to update my local md files used for ai rag implementation, i want the information to be updated"
+- **What worked:**
+  - Parsed `Anirban_Sarkar_Resume_v5.pdf` to extract exact education (NIT Agartala CSE, CGPA 9.1), work history (Sigmoid SDE Trainee, Sigmoid Data Eng Intern, NIC Backend Intern), skills (Python, SQL, C++, FastAPI, NestJS, Spring Boot, Azure, AWS, GCP, Databricks, Spark, Airflow, LangGraph), and credentials (Databricks Certified Data Engineer Associate, Codeforces Specialist 1514).
+  - Fetched live GitHub repositories for `Anirban780` (including `AudioScape`, `PDF-Compliance-Intelligence-Platform`, `Northstar_Pay_Lakehouse`, `vat-nic-backend-demo`, etc.).
+  - Rewrote `knowledge/resume.md` and `knowledge/about.md` with accurate candidate details.
+  - Replaced 4 generic placeholder project files with 5 real projects (`audioscape.md`, `pdf-compliance-platform.md`, `promotion-analytics-platform.md`, `nic-vat-system.md`, and updated `ask-about-me.md`).
+  - Removed outdated placeholder markdown files.
+  - Ran full verification: 51/51 unit tests passed across 7 test suites, 0 oxlint errors/warnings, 0 TypeScript errors, clean Vite production build.
+  - Committed changes as `0565d26`.
+- **Human decisions made:** Authorized updating knowledge base files to reflect actual resume and GitHub profile.
+- **Commits:** `docs(knowledge): update RAG knowledge base from resume v5 and GitHub` (`0565d26`)
+- **Open questions:** Remote push awaits git authentication credentials (PAT or SSH key) or manual push by user.
+
 
 
 
