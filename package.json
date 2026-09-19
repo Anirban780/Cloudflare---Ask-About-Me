@@ -18,6 +18,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "ingest": "tsx scripts/ingest.ts",
+    "eval:retrieval": "tsx evals/run-retrieval-eval.ts",
     "format": "oxfmt --write .",
     "lint": "oxlint src/",
     "check": "oxfmt --check . && oxlint src/ && tsc"

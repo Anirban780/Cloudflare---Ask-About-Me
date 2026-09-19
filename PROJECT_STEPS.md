@@ -138,19 +138,35 @@
 
 ---
 
-### Upcoming — Slice S8: Evals & Golden Suite
+### 2026-09-19 — Slice S8: Evals & Golden Suite
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Author golden evaluation suite with ≥20 realistic recruiter/engineer queries | `evals/golden.json` | ⬜ Pending |
-| 2 | Author hallucination and prompt-injection bait suite | `evals/bait.json` | ⬜ Pending |
-| 3 | Implement automated retrieval eval harness measuring hit@1, hit@5, and mean score | `evals/run-retrieval-eval.ts` | ⬜ Pending |
-| 4 | Add `"eval:retrieval": "tsx evals/run-retrieval-eval.ts"` script to `package.json` | `package.json` | ⬜ Pending |
-| 5 | Generate evaluation baseline report and tune `MIN_SCORE` threshold if needed | `evals/results.md` | ⬜ Pending |
+| 1 | Created golden evaluation suite with 24 queries, 4 paraphrase pairs, and 3 pinpoint queries | `evals/golden.json` | ✅ Done |
+| 2 | Created comprehensive 8-scenario hallucination and injection bait suite | `evals/bait.json` | ✅ Done |
+| 3 | Implemented automated retrieval eval harness with Hit@1, Hit@5, and mean score computation | `evals/run-retrieval-eval.ts` | ✅ Done |
+| 4 | Added `"eval:retrieval": "tsx evals/run-retrieval-eval.ts"` script to `package.json` | `package.json` | ✅ Done |
+| 5 | Created evaluation baseline report and benchmark documentation | `evals/results.md` | ✅ Done |
+| 6 | Verified dry-run execution validating dataset coverage across all 8 knowledge docs | `evals/run-retrieval-eval.ts` | ✅ Done |
+| 7 | Created Slice S8 execution plan and prompt history | `docs/plans/S08.md`, `prompt-history/2026-09-19-S08-antigravity.md` | ✅ Done |
+| 8 | Verified all tests (`npm test`: 36/36 passed) and types (`npm run typecheck`: 0 errors) | Entire codebase | ✅ Done |
+
+---
+
+### Upcoming — Slice S9: P1 Features (GitHub Projects & Owner Messaging)
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Create D1 database or SQLite table for `owner_inbox` per SPECS §5.2 and §8.3 | `src/agent/portfolio-agent.ts`, `wrangler.jsonc` | ⬜ Pending |
+| 2 | Implement `getGitHubProjects` agent tool with caching and rate limit handling | `src/agent/tools.ts` | ⬜ Pending |
+| 3 | Implement `leaveMessageForOwner` tool with `needsApproval: true` for Human-in-the-Loop | `src/agent/tools.ts` | ⬜ Pending |
+| 4 | Implement admin inbox endpoint `GET /api/admin/inbox` with Bearer auth | `src/server.ts` | ⬜ Pending |
+| 5 | Implement non-streaming evaluation ask endpoint `POST /api/admin/ask` | `src/server.ts` | ⬜ Pending |
 
 ---
 
 > **Note:** This file is updated slice-by-slice as the project progresses.
+
 
 
 

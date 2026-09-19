@@ -168,5 +168,26 @@
 - **Commits:** `27a898a` (`feat: visitor memory and guardrails`)
 - **Open questions:** None; S7 memory and guardrails complete.
 
+---
+
+## 2026-09-19 — Session 9 — Slice S8: Evals & Golden Suite — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Author golden evaluation queries dataset (`evals/golden.json`), hallucination and prompt-injection bait suite (`evals/bait.json`), build retrieval evaluation harness (`evals/run-retrieval-eval.ts`), integrate `"eval:retrieval"` npm script, and document baseline metrics in `evals/results.md`.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S08-antigravity.md](prompt-history/2026-09-19-S08-antigravity.md): "ok now proceed with slice s8 and follow the procedure followed in earlier slices and all"
+- **What worked:**
+  - Authored 24 diverse golden queries in `evals/golden.json` (exceeding ≥20 requirement) mapped across all 8 knowledge documents, including 4 paraphrase pairs (8 queries) and 3 pinpoint single-chunk queries.
+  - Authored complete 8-scenario bait suite in `evals/bait.json` testing Google employment denial, salary refusal, system prompt protection, coding quicksort decline, Cloudflare grounding, indirect injection resistance, PII refusal, and 1,500-char message rejection.
+  - Implemented automated retrieval evaluation script `evals/run-retrieval-eval.ts` supporting `--dry-run` schema validation and live search debugging via `/api/admin/search-debug` with `hit@1`, `hit@5`, mean top score, and markdown report generation.
+  - Added `"eval:retrieval": "tsx evals/run-retrieval-eval.ts"` script to `package.json`.
+  - Created initial benchmark report `evals/results.md`.
+  - Verified verification gates: dry-run passed across all 24 queries and 8 target docs; `npm test` passed 36/36 tests; `npm run typecheck` passed with 0 errors.
+- **What failed / was corrected:**
+  - `BAIT-08` initially contained JS string concatenation in `evals/bait.json`; replaced with valid raw JSON string.
+- **Human decisions made:** Proceed with Slice S8 evaluations and golden suite.
+- **Commits:** `feat: retrieval evals and golden set`
+- **Open questions:** None; S8 retrieval evals and golden set complete.
+
+
 
 

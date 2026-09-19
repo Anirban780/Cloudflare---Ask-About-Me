@@ -1,0 +1,122 @@
+[
+  {
+    "q": "What Cloudflare developer platform products has Anirban used?",
+    "expectDocIds": ["project-ask-about-me", "resume", "blog-edge-state-architecture"],
+    "category": "paraphrase-pair-1a"
+  },
+  {
+    "q": "Which Cloudflare tools and services does Anirban have hands-on experience with?",
+    "expectDocIds": ["project-ask-about-me", "resume", "blog-edge-state-architecture"],
+    "category": "paraphrase-pair-1b"
+  },
+  {
+    "q": "What event throughput and processing rates does Anirban's real-time data streaming platform handle?",
+    "expectDocIds": ["project-data-streaming-analytics"],
+    "category": "paraphrase-pair-2a"
+  },
+  {
+    "q": "How many events per second can the streaming analytics platform process?",
+    "expectDocIds": ["project-data-streaming-analytics"],
+    "category": "paraphrase-pair-2b"
+  },
+  {
+    "q": "What are the latency benchmarks and p99 performance of the Edge API Gateway?",
+    "expectDocIds": ["project-edge-api-gateway"],
+    "category": "paraphrase-pair-3a"
+  },
+  {
+    "q": "How fast does Anirban's edge API gateway respond at p99?",
+    "expectDocIds": ["project-edge-api-gateway"],
+    "category": "paraphrase-pair-3b"
+  },
+  {
+    "q": "What infrastructure as code tools does Anirban use for cloud automation?",
+    "expectDocIds": ["project-devops-infrastructure-automation", "resume"],
+    "category": "paraphrase-pair-4a"
+  },
+  {
+    "q": "How does Anirban automate cloud infrastructure deployments?",
+    "expectDocIds": ["project-devops-infrastructure-automation", "resume"],
+    "category": "paraphrase-pair-4b"
+  },
+  {
+    "q": "Where did Anirban complete his education and what degree did he earn?",
+    "expectDocIds": ["resume", "about"],
+    "category": "pinpoint-education"
+  },
+  {
+    "q": "What professional cloud and technical certifications does Anirban hold?",
+    "expectDocIds": ["resume"],
+    "category": "pinpoint-certifications"
+  },
+  {
+    "q": "How are Cloudflare Durable Objects used to manage state in the edge architecture blog?",
+    "expectDocIds": ["blog-edge-state-architecture"],
+    "category": "pinpoint-durable-objects"
+  },
+  {
+    "q": "Summarize Anirban Sarkar's core engineering background and experience.",
+    "expectDocIds": ["about", "resume"],
+    "category": "overview"
+  },
+  {
+    "q": "What programming languages and frameworks is Anirban proficient in?",
+    "expectDocIds": ["resume", "about"],
+    "category": "skills"
+  },
+  {
+    "q": "How does the Ask-About-Me project handle durable document ingestion?",
+    "expectDocIds": ["project-ask-about-me"],
+    "category": "projects"
+  },
+  {
+    "q": "What vector database does Anirban use for semantic search and embeddings?",
+    "expectDocIds": ["project-ask-about-me", "blog-edge-state-architecture"],
+    "category": "architecture"
+  },
+  {
+    "q": "What is Anirban's philosophy regarding software engineering and edge systems?",
+    "expectDocIds": ["about"],
+    "category": "philosophy"
+  },
+  {
+    "q": "How does the cloud distributed pipeline handle fault tolerance, retries, and dead letter queues?",
+    "expectDocIds": ["project-cloud-distributed-pipeline"],
+    "category": "projects"
+  },
+  {
+    "q": "What CI/CD platforms and GitOps tooling has Anirban implemented?",
+    "expectDocIds": ["project-devops-infrastructure-automation", "resume"],
+    "category": "devops"
+  },
+  {
+    "q": "What is the token limit and chunking strategy used in the Ask-About-Me knowledge pipeline?",
+    "expectDocIds": ["project-ask-about-me"],
+    "category": "rag-pipeline"
+  },
+  {
+    "q": "What database technologies and storage engines does Anirban have experience with?",
+    "expectDocIds": ["resume"],
+    "category": "databases"
+  },
+  {
+    "q": "How does Anirban implement rate limiting and guardrails in edge AI applications?",
+    "expectDocIds": ["project-ask-about-me", "blog-edge-state-architecture"],
+    "category": "guardrails"
+  },
+  {
+    "q": "What cloud providers and container orchestration systems has Anirban deployed to?",
+    "expectDocIds": ["resume", "project-devops-infrastructure-automation"],
+    "category": "infrastructure"
+  },
+  {
+    "q": "How does the streaming analytics platform aggregate time-series window data?",
+    "expectDocIds": ["project-data-streaming-analytics"],
+    "category": "analytics"
+  },
+  {
+    "q": "How does Anirban prevent prompt injection and protect system instructions in AI concierge agents?",
+    "expectDocIds": ["project-ask-about-me", "blog-edge-state-architecture"],
+    "category": "security"
+  }
+]
