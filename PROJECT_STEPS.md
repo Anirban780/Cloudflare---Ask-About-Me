@@ -68,17 +68,36 @@
 | 7 | Implemented unit tests for all 9 chunker properties | `test/chunker.test.ts` | ✅ Done |
 | 8 | Executed `npm test` verifying 9/9 tests pass (100% green) | `test/chunker.test.ts` | ✅ Done |
 | 9 | Verified TypeScript compilation clean (`npm run typecheck`) | Entire codebase | ✅ Done (0 errors) |
+| 10 | Committed Slice S3 (`aa93e57`, `dfa17a7`) | Git repository | ✅ Done |
 
 ---
 
-### Upcoming — Slice S4: Infrastructure Bindings
+### 2026-09-19 — Slice S4: Infrastructure Bindings
 
 | # | Change | Files Affected | Status |
 |---|--------|---------------|--------|
-| 1 | Vectorize index `ask-about-me-kb` binding | `wrangler.jsonc` | ⬜ Pending |
-| 2 | Ingest workflow binding | `wrangler.jsonc` | ⬜ Pending |
-| 3 | Update `/api/health` with Vectorize readiness | `src/server.ts` | ⬜ Pending |
-| 4 | Regenerate Wrangler types | `worker-configuration.d.ts` | ⬜ Pending |
+| 1 | Created Slice S4 execution plan | `docs/plans/S04.md` | ✅ Done |
+| 2 | Scaffolded `src/workflows/ingest-workflow.ts` with `IngestWorkflow` class | `src/workflows/ingest-workflow.ts` | ✅ Done |
+| 3 | Added Vectorize index binding (`ask-about-me-kb`) to `wrangler.jsonc` | `wrangler.jsonc` | ✅ Done |
+| 4 | Added Workflows binding (`ingest-workflow`) to `wrangler.jsonc` | `wrangler.jsonc` | ✅ Done |
+| 5 | Exported `IngestWorkflow` from `src/server.ts` | `src/server.ts` | ✅ Done |
+| 6 | Updated `/api/health` to report Vectorize, Workflows, and AI binding readiness | `src/server.ts` | ✅ Done |
+| 7 | Regenerated Wrangler types (`npx wrangler types`) | `worker-configuration.d.ts` | ✅ Done |
+| 8 | Verified unit tests pass (`npm test`: 9/9 tests green) | `test/chunker.test.ts` | ✅ Done |
+| 9 | Verified TypeScript compilation clean (`npm run typecheck`: 0 errors) | Entire codebase | ✅ Done |
+
+---
+
+### Upcoming — Slice S5: Ingestion Pipeline
+
+| # | Change | Files Affected | Status |
+|---|--------|---------------|--------|
+| 1 | Implement embedding helper | `src/rag/embed.ts` | ⬜ Pending |
+| 2 | Implement full durable `IngestWorkflow` (validate, chunk, delete-stale, embed-upsert) | `src/workflows/ingest-workflow.ts` | ⬜ Pending |
+| 3 | Add admin ingest endpoints (`POST /api/admin/ingest`, `GET /api/admin/ingest/:id`, `GET /api/admin/search-debug`) | `src/server.ts` | ⬜ Pending |
+| 4 | Implement CLI script (`scripts/ingest.ts`) | `scripts/ingest.ts` | ⬜ Pending |
+| 5 | Install `tsx` and `gray-matter` dev dependencies per SKILLS R7 allowlist | `package.json` | ⬜ Pending |
+| 6 | Create initial knowledge documents | `knowledge/*.md` | ⬜ Pending |
 
 ---
 

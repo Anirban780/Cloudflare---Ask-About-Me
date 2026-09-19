@@ -74,5 +74,25 @@
   - Vitest initially loaded `vite.config.ts` with `@cloudflare/vite-plugin` which attempted to reach remote Cloudflare server; resolved cleanly by creating `vitest.config.ts` for node environment.
   - Test fixture in Property 5 had test string containing the section name; fixed test string.
 - **Human decisions made:** Proceed with Slice S3.
-- **Commits:** `aa93e57` (`feat: markdown chunker with tests`)
+- **Commits:** `aa93e57` (`feat: markdown chunker with tests`), `dfa17a7` (`docs: update PROMPTS.md`)
 - **Open questions:** None; S3 chunker fully verified.
+
+---
+
+## 2026-09-19 — Session 5 — Slice S4: Infrastructure Bindings & Vectorize — Tool: Google Antigravity (Gemini 3.8 Flash)
+
+- **Goal:** Declare Vectorize index binding (`ask-about-me-kb`) and Workflow binding (`ingest-workflow`) in `wrangler.jsonc`, scaffold `IngestWorkflow`, export from `src/server.ts`, update `/api/health` to report binding status, regenerate types, and verify gates.
+- **Key prompts:**
+  - [prompt-history/2026-09-19-S04-antigravity.md](prompt-history/2026-09-19-S04-antigravity.md): "yes you can proceed with slice s4 with caution and precautions and also keep track in which files what changes have been made and all, and follow the exact procedure followed in earlier steps"
+- **What worked:**
+  - Added `VECTORIZE` index binding (`ask-about-me-kb`) to `wrangler.jsonc`.
+  - Added `INGEST_WORKFLOW` Workflows binding to `wrangler.jsonc`.
+  - Created `src/workflows/ingest-workflow.ts` scaffolding `IngestWorkflow` class extending `WorkflowEntrypoint`.
+  - Exported `IngestWorkflow` from `src/server.ts` alongside `PortfolioAgent`.
+  - Enhanced `GET /api/health` endpoint to report binding status for `vectorize`, `workflow`, and `ai`.
+  - Regenerated Wrangler types (`npx wrangler types`) updating `worker-configuration.d.ts` with `VECTORIZE: VectorizeIndex` and `INGEST_WORKFLOW: Workflow`.
+  - Verified verification gates: `npm test` passed 9/9 unit tests (100% green) and `npm run typecheck` passed with 0 errors.
+- **What failed / was corrected:** N/A.
+- **Human decisions made:** Proceed with Slice S4.
+- **Commits:** Pending S4 commit (`feat: vectorize binding and health route`).
+- **Open questions:** None.
